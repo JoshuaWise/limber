@@ -1,0 +1,30 @@
+{
+  "name": "limber",
+  "version": "0.1.0",
+  "homepage": "https://github.com/JoshuaWise/limber",
+  "authors": [
+    "Joshua Wise <josh@joshuawise.ninja>"
+  ],
+  "description": "A tiny, flexible, front-end framework for building responsive websites",
+  "main": [
+    "limber.styl",
+    "limber.js"
+  ],
+  "keywords": [
+    "framework",
+    "styl",
+    "js",
+    "front-end",
+    "modern",
+    "responsive"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {}
+}
