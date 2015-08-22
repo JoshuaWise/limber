@@ -37,7 +37,7 @@ border-radius(groups...)
 					
 			// Check for invalid border-radius values.
 			unless -border-radius-valid-value(given-value)
-				error('invalid border-radius value "' + given-value + '"')			
+				error('invalid border-radius value "' + given-value + '"')
 				
 			// Interpret directions, and apply to result-properties.
 			for direction in -border-radius-interpret-directions(given-directions)
@@ -48,7 +48,7 @@ border-radius(groups...)
 	top-right = result-properties[top-right]
 	bottom-left = result-properties[bottom-left]
 	bottom-right = result-properties[bottom-right]
-	if length(keys(result-properties)) != 4 or top-left == inherit or top-right == inherit or bottom-right == inherit or bottom-left == inherit
+	if length(keys(result-properties)) != 4 or inherit in (top-left top-right bottom-left bottom-right)
 		for direction, value in result-properties
 			border-{direction}-radius value priority
 	else
@@ -56,7 +56,7 @@ border-radius(groups...)
 		length-top-right = length(top-right)
 		length-bottom-left = length(bottom-left)
 		length-bottom-right = length(bottom-right)
-		if length-top-left > 1 or length-top-right > 1 or length-bottom-left > 1 or length-bottom-right > 1
+		if 2 in (length-top-left length-top-right length-bottom-left length-bottom-right)
 			push(top-left, top-left) if length-top-left == 1
 			push(top-right, top-right) if length-top-right == 1
 			push(bottom-left, bottom-left) if length-bottom-left == 1
