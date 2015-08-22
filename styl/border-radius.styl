@@ -1,0 +1,102 @@
+border-radius(groups...)
+	alternative-syntax = false
+	all-directions = (top bottom left right)
+	
+	// Determine if using alternative syntax.
+	if list-separator(groups) == ','
+		alternative-syntax = true
+	else
+		for arg in groups
+			if arg in all-directions
+				alternative-syntax = true
+		if alternative-syntax
+			groups = (null groups)
+			
+	// Return early if normal syntax is being used.
+	unless alternative-syntax
+		border-radius arguments
+	return unless alternative-syntax
+	
+	priority = extract-priority(last(groups))
+	result-properties = {}
+	
+	for group in groups
+		unless group == null
+			given-directions = ()
+			given-value = ()
+			reached-a-value = false
+			
+			// Determine given directions and given value.
+			for arg in group
+				unless arg == null
+					if (not reached-a-value) and arg in all-directions
+						push(given-directions, arg)
+					else
+						reached-a-value = true
+						push(given-value, arg)
+					
+			// Check for invalid border-radius values.
+			unless -border-radius-valid-value(given-value)
+				error('invalid border-radius value "' + given-value + '"')			
+				
+			// Interpret directions, and apply to result-properties.
+			for direction in -border-radius-interpret-directions(given-directions)
+				result-properties[direction] = given-value
+			
+	// Apply result-properties.
+	if length(keys(result-properties)) != 4
+		for direction, value in result-properties
+			border-{direction}-radius value priority
+	else
+		top-left = result-properties[top-left]
+		top-right = result-properties[top-right]
+		bottom-left = result-properties[bottom-left]
+		bottom-right = result-properties[bottom-right]
+		length-top-left = length(top-left)
+		length-top-right = length(top-right)
+		length-bottom-left = length(bottom-left)
+		length-bottom-right = length(bottom-right)
+		if length-top-left > 1 or length-top-right > 1 or length-bottom-left > 1 or length-bottom-right > 1
+			push(top-left, top-left) if length-top-left == 1
+			push(top-right, top-right) if length-top-right == 1
+			push(bottom-left, bottom-left) if length-bottom-left == 1
+			push(bottom-right, bottom-right) if length-bottom-right == 1
+			border-radius top-left[0] top-right[0] bottom-right[0] bottom-left[0] / top-left[1] top-right[1] bottom-right[1] bottom-left[1]
+		else
+			border-radius top-left top-right bottom-right bottom-left
+			
+-border-radius-valid-value(value)
+	len = length(value)
+	return false unless len == 1 or len == 2
+	return false unless value[0] is a 'unit' or value[0] is a 'literal'
+	return false unless len == 1 or value[1] is a 'unit' or value[1] is a 'literal'
+	return true
+	
+-border-radius-interpret-directions(given-directions)
+	// if there are no given directions, assume all directions
+	return (top-left top-right bottom-left bottom-right) unless length(given-directions)
+		
+	v-directions = (top bottom)
+	h-directions = (left right)
+	interpreted-directions = ()
+	
+	direction = given-directions[0]
+	axis = direction in v-directions ? v-directions : h-directions
+	cross = axis == v-directions ? h-directions : v-directions
+	opposite = direction == axis[0] ? axis[1] : axis[0]
+	
+	includes-opposite = opposite in given-directions
+	
+	// if there are no cross directions specified, assume both of them
+	unless cross[0] in given-directions or cross[1] in given-directions
+		push(given-directions, cross[0])
+		push(given-directions, cross[1])
+	
+	for cross-direction in cross
+		if cross-direction in given-directions
+			push(interpreted-directions, unquote(axis == v-directions ? direction + '-' + cross-direction : cross-direction + '-' + direction))
+			if includes-opposite
+				push(interpreted-directions, unquote(axis == v-directions ? opposite + '-' + cross-direction : cross-direction + '-' + opposite))
+				
+	return interpreted-directions
+	

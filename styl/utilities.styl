@@ -1,0 +1,8 @@
+first(list)
+	return list[0]
+	
+last(list)
+	return list[length(list) - 1]
+	
+extract-priority(last-group)
+	return last(last-group) == !important ? pop(last-group) : unquote('')
