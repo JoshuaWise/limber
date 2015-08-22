@@ -44,14 +44,14 @@ border-radius(groups...)
 				result-properties[direction] = given-value
 			
 	// Apply result-properties.
-	if length(keys(result-properties)) != 4
+	top-left = result-properties[top-left]
+	top-right = result-properties[top-right]
+	bottom-left = result-properties[bottom-left]
+	bottom-right = result-properties[bottom-right]
+	if length(keys(result-properties)) != 4 or top-left == inherit or top-right == inherit or bottom-right == inherit or bottom-left == inherit
 		for direction, value in result-properties
 			border-{direction}-radius value priority
 	else
-		top-left = result-properties[top-left]
-		top-right = result-properties[top-right]
-		bottom-left = result-properties[bottom-left]
-		bottom-right = result-properties[bottom-right]
 		length-top-left = length(top-left)
 		length-top-right = length(top-right)
 		length-bottom-left = length(bottom-left)
@@ -61,11 +61,12 @@ border-radius(groups...)
 			push(top-right, top-right) if length-top-right == 1
 			push(bottom-left, bottom-left) if length-bottom-left == 1
 			push(bottom-right, bottom-right) if length-bottom-right == 1
-			border-radius top-left[0] top-right[0] bottom-right[0] bottom-left[0] / top-left[1] top-right[1] bottom-right[1] bottom-left[1]
+			border-radius top-left[0] top-right[0] bottom-right[0] bottom-left[0] / top-left[1] top-right[1] bottom-right[1] bottom-left[1] priority
 		else
-			border-radius top-left top-right bottom-right bottom-left
+			border-radius top-left top-right bottom-right bottom-left priority
 			
 -border-radius-valid-value(value)
+	return true if value == inherit
 	len = length(value)
 	return false unless len == 1 or len == 2
 	return false unless value[0] is a 'unit' or value[0] is a 'literal'
