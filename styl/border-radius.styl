@@ -1,6 +1,6 @@
 border-radius(groups...)
 	alternative-syntax = false
-	all-directions = (top bottom left right)
+	all-directions = ('top' 'bottom' 'left' 'right')
 	
 	// Determine if using alternative syntax.
 	if list-separator(groups) == ','
@@ -17,7 +17,7 @@ border-radius(groups...)
 		border-radius arguments
 	return unless alternative-syntax
 	
-	priority = extract-priority(last(groups))
+	priority = -extract-priority(last(groups))
 	result-properties = {}
 	
 	for group in groups
@@ -34,7 +34,7 @@ border-radius(groups...)
 					else
 						reached-a-value = true
 						push(given-value, arg)
-					
+						
 			// Check for invalid border-radius values.
 			unless -border-radius-valid-value(given-value)
 				error('invalid border-radius value "' + given-value + '"')
@@ -42,13 +42,13 @@ border-radius(groups...)
 			// Interpret directions, and apply to result-properties.
 			for direction in -border-radius-interpret-directions(given-directions)
 				result-properties[direction] = given-value
-			
+				
 	// Apply result-properties.
-	top-left = result-properties[top-left]
-	top-right = result-properties[top-right]
-	bottom-left = result-properties[bottom-left]
-	bottom-right = result-properties[bottom-right]
-	if length(keys(result-properties)) != 4 or inherit in (top-left top-right bottom-left bottom-right)
+	top-left = result-properties['top-left']
+	top-right = result-properties['top-right']
+	bottom-left = result-properties['bottom-left']
+	bottom-right = result-properties['bottom-right']
+	if length(keys(result-properties)) != 4 or 'inherit' in (top-left top-right bottom-left bottom-right)
 		for direction, value in result-properties
 			border-{direction}-radius value priority
 	else
@@ -66,7 +66,7 @@ border-radius(groups...)
 			border-radius top-left top-right bottom-right bottom-left priority
 			
 -border-radius-valid-value(value)
-	return true if value == inherit
+	return true if value == 'inherit'
 	len = length(value)
 	return false unless len == 1 or len == 2
 	return false unless value[0] is a 'unit' or value[0] is a 'literal'
@@ -75,10 +75,10 @@ border-radius(groups...)
 	
 -border-radius-interpret-directions(given-directions)
 	// if there are no given directions, assume all directions
-	return (top-left top-right bottom-left bottom-right) unless length(given-directions)
-		
-	v-directions = (top bottom)
-	h-directions = (left right)
+	return ('top-left' 'top-right' 'bottom-left' 'bottom-right') unless length(given-directions)
+	
+	v-directions = ('top' 'bottom')
+	h-directions = ('left' 'right')
 	interpreted-directions = ()
 	
 	direction = given-directions[0]
@@ -92,7 +92,7 @@ border-radius(groups...)
 	unless cross[0] in given-directions or cross[1] in given-directions
 		push(given-directions, cross[0])
 		push(given-directions, cross[1])
-	
+		
 	for cross-direction in cross
 		if cross-direction in given-directions
 			push(interpreted-directions, unquote(axis == v-directions ? direction + '-' + cross-direction : cross-direction + '-' + direction))

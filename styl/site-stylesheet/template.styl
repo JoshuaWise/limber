@@ -1,0 +1,61 @@
+*, *:before, *:after
+	box-sizing inherit
+	text-rendering geometricPrecision
+	
+::selection
+	background selection-color
+::-moz-selection
+	background selection-color
+	
+html
+	background-color background-color
+	overflow-y auto
+	box-sizing border-box
+	font-size 100vw
+	@media viewport-min
+		font-size phone-range[0]
+	@media viewport-max
+		font-size desktop-range[1]
+		
+body
+	position relative
+	max-width desktop-range[1]
+	min-height 100vh
+	overflow-x hidden
+	color foreground-color
+	font-family base-font-family
+	font-size base-font-size
+	font-weight base-font-weight
+	font-style base-font-style
+	line-height base-line-height
+	
+a
+	&:hover
+		cursor pointer
+	&[disabled]
+		cursor default
+		
+img
+	display inline-block
+	height auto
+	max-width 100%
+	vertical-align middle
+	
+p
+	margin paragraph-margin
+	color inherit
+	font-family inherit
+	font-size inherit
+	font-weight inherit
+	font-style inherit
+	font-height inherit
+	
+.base
+	color foreground-color
+	font-family base-font-family
+	font-size base-font-size
+	font-weight base-font-weight
+	font-style base-font-style
+	line-height base-line-height
+	
+-apply-heading-styles()

@@ -1,0 +1,10 @@
+don't like how there are 2 types of utilities
+
+anything defined in the site-stylesheet() mixin does not have global scope
+
+make sure the p and hx base styles are how I want them (em? inherit? etc.)
+
+bring in JavaScript from Ryan's site, and add buggyfix for vh
+(or apply min-height to body style manually in JavaScript)
+
+http://caniuse.com/#feat=flexbox
