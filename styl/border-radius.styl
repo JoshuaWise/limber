@@ -7,57 +7,26 @@
  * 		border-radius 4px, bottom right 50%
  */
 border-radius(groups...)
-	alternative-syntax = false
-	all-directions = ('top' 'bottom' 'left' 'right')
-	
-	// Determine if using alternative syntax.
-	if list-separator(groups) == ','
-		alternative-syntax = true
+	if -border-radius-alternative-syntax(groups)
+		groups = (null groups) unless list-separator(groups) == ','
+		priority = -extract-priority(last(groups))
+		result-properties = -parse-groups(groups, -border-radius-options)
+		-border-radius-print-properties(result-properties, priority)
 	else
-		for arg in groups
-			if arg in all-directions
-				alternative-syntax = true
-		if alternative-syntax
-			groups = (null groups)
-			
-	// Return early if normal syntax is being used.
-	unless alternative-syntax
 		border-radius arguments
-	return unless alternative-syntax
+		
+-border-radius-alternative-syntax(args)
+	return true if list-separator(args) == ','
+	return true if arg in -all-directions for arg in args
+	return false
 	
-	priority = -extract-priority(last(groups))
-	result-properties = {}
-	
-	for group in groups
-		unless group == null
-			given-directions = ()
-			given-value = ()
-			reached-a-value = false
-			
-			// Determine given directions and given value.
-			for arg in group
-				unless arg == null
-					if (not reached-a-value) and arg in all-directions
-						push(given-directions, arg)
-					else
-						reached-a-value = true
-						push(given-value, arg)
-						
-			// Check for invalid border-radius values.
-			unless -border-radius-valid-value(given-value)
-				error('invalid border-radius value "' + given-value + '"')
-				
-			// Interpret directions, and apply to result-properties.
-			for direction in -border-radius-interpret-directions(given-directions)
-				result-properties[direction] = given-value
-				
-	// Apply result-properties.
-	top-left = result-properties['top-left']
-	top-right = result-properties['top-right']
-	bottom-left = result-properties['bottom-left']
-	bottom-right = result-properties['bottom-right']
-	if length(keys(result-properties)) != 4 or 'inherit' in (top-left top-right bottom-left bottom-right)
-		for direction, value in result-properties
+-border-radius-print-properties(properties, priority)
+	top-left = properties['top-left']
+	top-right = properties['top-right']
+	bottom-left = properties['bottom-left']
+	bottom-right = properties['bottom-right']
+	if length(keys(properties)) != 4 or 'inherit' in (top-left top-right bottom-left bottom-right)
+		for direction, value in properties
 			border-{direction}-radius value priority
 	else
 		length-top-left = length(top-left)
@@ -73,7 +42,7 @@ border-radius(groups...)
 		else
 			border-radius top-left top-right bottom-right bottom-left priority
 			
--border-radius-valid-value(value)
+-border-radius-validator(value)
 	return true if value == 'inherit'
 	len = length(value)
 	return false unless len == 1 or len == 2
@@ -81,7 +50,7 @@ border-radius(groups...)
 	return false unless len == 1 or value[1] is a 'unit' or value[1] is a 'literal'
 	return true
 	
--border-radius-interpret-directions(given-directions)
+-border-radius-transformer(given-directions)
 	// If there are no given directions, assume all directions.
 	return ('top-left' 'top-right' 'bottom-left' 'bottom-right') unless length(given-directions)
 	
@@ -109,3 +78,7 @@ border-radius(groups...)
 				
 	return interpreted-directions
 	
+-border-radius-options = {
+	'validator': -border-radius-validator
+	'direction-transformer': -border-radius-transformer
+}

@@ -1,9 +1,12 @@
 error('this module can only be loaded internally by limber') unless -limber-loading = true
 
-@require('./styl/normalize')
-@require('./styl/classes')
+@require('./styl/normalize') unless limber-skip-normalize == true
+@require('./styl/classes') unless limber-skip-classes == true
 
 @require('./styl/functions-private')
 @require('./styl/functions-public')
+@require('./styl/resets')
 
 @require('./styl/border-radius')
+@require('./styl/positions')
+@require('./styl/background')

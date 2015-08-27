@@ -1,0 +1,51 @@
+/**
+ * Provides shorthands for specifying position and left, right, top, bottom
+ * in a single line. 
+ * If no value is specified, it defaults to 0.
+ * If no directions are given, the value is applied to all 4 directions.
+ * Usage:
+ * 		fixed top left 15px
+ * 		absolute left right 0
+ * 		absolute left right
+ * 		relative left 5px, top 20px
+ * 		fixed null
+ * 		static auto
+ */
+static()
+	position static
+	-positions(arguments)
+	
+relative()
+	position relative
+	-positions(arguments)
+	
+absolute()
+	position absolute
+	-positions(arguments)
+	
+fixed()
+	position fixed
+	-positions(arguments)
+	
+-positions(groups)
+	return unless length(groups) > 0
+	groups = (null groups) unless list-separator(groups) == ','
+	priority = -extract-priority(last(groups))
+	result-properties = -parse-groups(groups, -positions-options)
+	{property} value priority for property, value in result-properties
+	
+-positions-validator(value)
+	return true if value == 'auto' or value == 'inherit'
+	return false unless length(value) == 1
+	return false unless value is a 'unit' or value is a 'literal'
+	return true
+	
+-positions-transformer(given-directions)
+	return ('top' 'bottom' 'left' 'right') unless length(given-directions)
+	return given-directions
+	
+-positions-options = {
+	'default-value': 0
+	'validator': -positions-validator
+	'direction-transformer': -positions-transformer
+}

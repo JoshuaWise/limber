@@ -1,8 +1,84 @@
+use('./plugins/get-2x-url.js')
+use('./plugins/contains-url-call.js')
+use('./plugins/convert-to-list.js')
+
+/**
+ * Frequently used list of directions.
+ */
+-all-directions = ('top' 'left' 'bottom' 'right')
+
 /**
  * Extracts priority flags from mixin arguments.
  */
 -extract-priority(last-group)
 	return last(last-group) == !important ? pop(last-group) : unquote('')
+	
+/**
+ * Same as -extract-priority(), except it does not remove the priority flag
+ * from the original arguments.
+ */
+-copy-priority(last-group)
+	return last(last-group) == !important ? !important : unquote('')
+	
+/**
+ * Parsed a list of groups, which each contain directions folllowed by a value.
+ * Returns a hash of the resulting directions and their corresponding values.
+ * If there is only one group, it must be prepended by null, to create a proper
+ * list with length > 1. The last group should already have potential priority
+ * flags removed.
+ * 
+ * By default, groups without both directions and values are ignored. 
+ * To accept groups without values, pass a 'default-value' option of length > 0.
+ * When no value is given, this will take its place. Keep in mind that if this
+ * option is not provided, and a validator function does not accept values of
+ * length == 0, the validator will throw an error.
+ * 
+ * An option 'direction-transformer' can be passed, which is a function
+ * accepting a list of the given directions, and returning a list of strings.
+ * Those strings are instead used as keys in the returned hash.
+ * To accept groups without directions, the 'direction-transformer' function
+ * can include a case for when length(directions) == 0.
+ *
+ * An option 'validator' can be passed, which is a function accepting the given
+ * value in a group, and returning true if it's valid, and false otherwise.
+ * When false is returned, an error is thrown and stylus parsing fails.
+ * 
+ * Examples can be be seen in border-radius.styl, and positions.styl.
+ */
+-parse-groups(groups, options)
+	default-value-in-options = 'default-value' in options
+	default-value = options['default-value']
+	
+	validator-in-options = 'validator' in options
+	validator = options['validator']
+	
+	direction-transformer-in-options = 'direction-transformer' in options
+	direction-transformer = options['direction-transformer']
+	
+	all-directions = ('top' 'bottom' 'left' 'right')
+	result-directions = {}
+	for group in groups
+		unless group == null
+			given-directions = ()
+			given-value = ()
+			reached-a-value = false
+			for arg in group
+				unless arg == null
+					if (not reached-a-value) and arg in all-directions
+						push(given-directions, arg)
+					else
+						reached-a-value = true
+						push(given-value, arg)
+			if default-value-in-options
+				given-value = default-value if length(given-value) == 0
+			if validator-in-options
+				error('invalid value "' + given-value + '"') unless validator(given-value)
+			if direction-transformer-in-options
+				given-directions = direction-transformer(given-directions)
+			if length(given-value)
+				for direction in given-directions
+					result-directions[direction] = clone(given-value)
+	return result-directions
 	
 /**
  * Given a rule hash, returns a list with two elements.

@@ -11,7 +11,7 @@ desktop-only = desktop
 viewport-min = s('screen and (max-width %s)', phone-range[0])
 viewport-max = s('screen and (min-width %s)', desktop-range[1])
 
-retina = unquote('(-webkit-min-device-pixel-ratio: 2), (min--moz-device-pixel-ratio: 2), (-o-min-device-pixel-ratio: 2/1), (min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx), print')
+retina = s('(-webkit-min-device-pixel-ratio: %s), (min--moz-device-pixel-ratio: %s), (-o-min-device-pixel-ratio: %s/1), (min-device-pixel-ratio: %s), (min-resolution: %sdpi), (min-resolution: %sdppx), print', retina-dppx, retina-dppx, retina-dppx, retina-dppx, retina-dppx * 96, retina-dppx)
 
 meta.limber-var-phone
 	background-image phone

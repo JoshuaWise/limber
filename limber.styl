@@ -4,5 +4,5 @@ error('limber can not be imported twice') if -limber-full is defined
 
 -limber-loading = true
 @require('./limber-shared')
-@require('./styl/templates/full')
+@require('./styl/templates/full') unless limber-skip-template == true
 -limber-loading = false
