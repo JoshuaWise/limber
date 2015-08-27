@@ -1,0 +1,118 @@
+/**
+ * Extracts priority flags from mixin arguments.
+ */
+-extract-priority(last-group)
+	return last(last-group) == !important ? pop(last-group) : unquote('')
+	
+/**
+ * Given a rule hash, returns a list with two elements.
+ * That list's first element is the rule's first property's name (eg, font-size)
+ * The list's second element is the rule's first property's value (eg, 40px)
+ * Example:
+ * 		rule = {selector: 'h1', properties: ()}
+ * 		push(rule.properties, {margin: 40px})
+ * 		push(rule.properties, {text-align: left})
+ * 		push(rule.properties, {width: 100%})
+ * 		-first-property(rule) => ('margin' 40px)
+ */
+-first-property(rule)
+	properties = rule.properties
+	len = length(properties)
+	return null if len == 0
+	return property value for property, value in properties if len == 1
+	return property value for property, value in entry for entry in properties
+	
+/**
+ * Given a list of rule hashes where each rule only contains one property,
+ * returns a new list of rule hashes, which is logically equivilent, but
+ * generally smaller in size.
+ * Example:
+ * 		rules = ()
+ * 		push(rules, {selector: 'h1', properties: {font-size: 15px}})
+ * 		push(rules, {selector: 'p', properties: {font-size: 15px}})
+ * 		push(rules, {selector: 'h1', properties: {margin: auto}})
+ * 		push(rules, {selector: 'h1', properties: {width: 100%}})
+ * 		-combine-rules(rules) => (
+ * 							{selector: 'h1, p', properties: {font-size: 15px}}
+ * 							{selector: 'h1', properties: (
+ * 								{margin: auto}
+ * 								{width: 100%}
+ * 							)}
+ * 						)
+ */
+-combine-rules(rules)
+	len = length(rules)
+	return () unless len > 0
+	
+	rules = clone(rules)
+	selectors = {}
+	for i in (0 ... len)
+		rule = rules[i]
+		unless rule == null
+			matched-selectors = clone(rule.selector)
+			relevant-entry = -first-property(rule)
+			for j in (i + 1 ... len)
+				other-rule = rules[j]
+				unless other-rule == null
+					if -first-property(other-rule) == relevant-entry
+						push(matched-selectors, other-rule.selector) unless other-rule.selector in matched-selectors
+						rules[j] = null
+			selector = join(', ', sort(matched-selectors))
+			selectors[selector] = () unless selector in selectors
+			entry = {}
+			entry[relevant-entry[0]] = relevant-entry[1]
+			push(selectors[selector], entry)
+	results = ()
+	for selector, properties in selectors
+		push(results, {
+			selector: selector
+			properties: properties
+		})
+	return results
+	
+/**
+ * Given a rule hash, print the rule in actual CSS.
+ * Example:
+ *  	-print-rule({selector: 'h1', properties: ({font-size: 40px} {left: 0})})
+ * 	=>	h1 {
+ * 			font-size: 40px;
+ * 			left: 0;
+ * 		}
+ */
+-print-rule(rule)
+	selector = rule.selector
+	properties = rule.properties
+	{selector}
+		{property} value for property, value in properties
+		
+/**
+ * Used internally to apply "heading-" options from site-globals.
+ */
+-apply-heading-styles()
+	properties = {
+		font-family: heading-font-family
+		font-size: heading-font-size
+		font-weight: heading-font-weight
+		font-style: heading-font-style
+		line-height: heading-line-height
+		margin: heading-margin
+	}
+	heading-names = 'h1' 'h2' 'h3' 'h4' 'h5' 'h6'
+	backtrack-until-non-null = @(values, start) {
+		return values[j] if values[j] != null for j in (start .. 0)
+	}
+	rules = ()
+	for property, values in properties
+		error('first value of "heading-" option cannot be null') if values[0] == null
+		single-value = list-separator(values) != ','
+		i = 0
+		for heading-name in heading-names
+			entry = {}
+			entry[property] = single-value ? values : backtrack-until-non-null(values, i)
+			push(rules, {
+				'selector': heading-name
+				'properties': entry
+			})
+			i = i + 1
+	-print-rule(rule) for rule in -combine-rules(rules)
+	

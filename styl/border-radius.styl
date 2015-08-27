@@ -1,3 +1,11 @@
+/**
+ * Backwards-compatible border-radius mixin, allowing for alternative syntax.
+ * Usage:
+ *  	border-radius bottom 4px
+ * 		border-radius top left 1em
+ * 		border-radius top 4px, bottom inherit
+ * 		border-radius 4px, bottom right 50%
+ */
 border-radius(groups...)
 	alternative-syntax = false
 	all-directions = ('top' 'bottom' 'left' 'right')
@@ -74,7 +82,7 @@ border-radius(groups...)
 	return true
 	
 -border-radius-interpret-directions(given-directions)
-	// if there are no given directions, assume all directions
+	// If there are no given directions, assume all directions.
 	return ('top-left' 'top-right' 'bottom-left' 'bottom-right') unless length(given-directions)
 	
 	v-directions = ('top' 'bottom')
@@ -88,7 +96,7 @@ border-radius(groups...)
 	
 	includes-opposite = opposite in given-directions
 	
-	// if there are no cross directions specified, assume both of them
+	// If there are no cross directions specified, assume both of them.
 	unless cross[0] in given-directions or cross[1] in given-directions
 		push(given-directions, cross[0])
 		push(given-directions, cross[1])

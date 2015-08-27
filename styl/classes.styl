@@ -1,22 +1,23 @@
-limber-classes()
-	.clearfix:after // Lean, modern variation of the clearfix hack.
-		content ''
-		display table
-		clear both
-		
-	.visually-hidden // Makes content only available to screen-readers/robots.
-		position absolute !important
-		clip rect(1px, 1px, 1px, 1px) !important
-		padding 0 !important
-		border 0 !important
-		height 1px !important
-		width 1px !important
-		overflow hidden !important
-		body:hover &
-			a, input, button
-				display: none !important;
-				
-	ol.semantic-list, ul.semantic-list
-		margin 0
-		list-style-type none
-		
+.clearfix:before, // Lean, modern variation of the clearfix hack.
+.clearfix:after
+	content ''
+	display table
+	clear both
+	line-height 0
+	
+.visually-hidden // Makes content only available to screen-readers/robots.
+	position absolute !important
+	clip rect(1px, 1px, 1px, 1px) !important
+	padding 0 !important
+	border 0 !important
+	height 1px !important
+	width 1px !important
+	overflow hidden !important
+	body:hover &
+		a, input, button
+			display: none !important;
+			
+ol.semantic-list, ul.semantic-list // Provides style-less lists.
+	margin 0
+	list-style-type none
+	
