@@ -1,5 +1,7 @@
 add other modules that are in nib
 
+add vendor support
+
 confirm essentials framework
 
 make sure the p and hx base styles are how I want them (em? inherit? etc.)
@@ -7,6 +9,8 @@ make sure the p and hx base styles are how I want them (em? inherit? etc.)
 bring in JavaScript from Ryan's site
 
 decide what I want to do with body {min-height: 100%} (vh?)
+
+add grid module
 
 make sure outdated browser test accounts for everything used in framework
 

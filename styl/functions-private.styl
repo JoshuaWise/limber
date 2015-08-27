@@ -5,8 +5,20 @@ use('./plugins/convert-to-list.js')
 /**
  * Frequently used list of directions.
  */
--all-directions = ('top' 'left' 'bottom' 'right')
+-global-directions = ('top' 'left' 'bottom' 'right')
 
+/**
+ * Frequently used list of global CSS values.
+ */
+-global-values = ('inherit' 'initial' 'unset')
+
+/**
+ * Returns whether there is a global CSS value in the given list.
+ */
+-global-value-in(list)
+	return true if global in list for global in -global-values
+	return false
+	
 /**
  * Extracts priority flags from mixin arguments.
  */
@@ -55,7 +67,6 @@ use('./plugins/convert-to-list.js')
 	direction-transformer-in-options = 'direction-transformer' in options
 	direction-transformer = options['direction-transformer']
 	
-	all-directions = ('top' 'bottom' 'left' 'right')
 	result-directions = {}
 	for group in groups
 		unless group == null
@@ -64,7 +75,7 @@ use('./plugins/convert-to-list.js')
 			reached-a-value = false
 			for arg in group
 				unless arg == null
-					if (not reached-a-value) and arg in all-directions
+					if (not reached-a-value) and arg in -global-directions
 						push(given-directions, arg)
 					else
 						reached-a-value = true

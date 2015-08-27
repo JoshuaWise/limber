@@ -17,7 +17,7 @@ border-radius(groups...)
 		
 -border-radius-alternative-syntax(args)
 	return true if list-separator(args) == ','
-	return true if arg in -all-directions for arg in args
+	return true if arg in -global-directions for arg in args
 	return false
 	
 -border-radius-print-properties(properties, priority)
@@ -25,7 +25,7 @@ border-radius(groups...)
 	top-right = properties['top-right']
 	bottom-left = properties['bottom-left']
 	bottom-right = properties['bottom-right']
-	if length(keys(properties)) != 4 or 'inherit' in (top-left top-right bottom-left bottom-right)
+	if length(keys(properties)) != 4 or -global-value-in(top-left top-right bottom-left bottom-right)
 		for direction, value in properties
 			border-{direction}-radius value priority
 	else
@@ -43,7 +43,7 @@ border-radius(groups...)
 			border-radius top-left top-right bottom-right bottom-left priority
 			
 -border-radius-validator(value)
-	return true if value == 'inherit'
+	return true if value in -global-values
 	len = length(value)
 	return false unless len == 1 or len == 2
 	return false unless value[0] is a 'unit' or value[0] is a 'literal'

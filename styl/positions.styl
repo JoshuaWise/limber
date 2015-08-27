@@ -35,7 +35,7 @@ fixed()
 	{property} value priority for property, value in result-properties
 	
 -positions-validator(value)
-	return true if value == 'auto' or value == 'inherit'
+	return true if value in -global-values or value == 'auto'
 	return false unless length(value) == 1
 	return false unless value is a 'unit' or value is a 'literal'
 	return true
