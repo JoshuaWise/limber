@@ -1,0 +1,15 @@
+/**
+ * A backwards-compatible mixin for overflow, which provides the extra value
+ * 'ellipsis', which is the same as "overflow: hidden", except that text will
+ * be truncated to a single line, and overflowing text will cause an ellipsis
+ * effect.
+ */
+overflow(value, priority = unquote(''))
+	if value == 'ellipsis'
+		error('too many arguments') unless priority == !important or priority == ''
+		overflow hidden priority
+		text-overflow ellipsis priority
+		white-space nowrap priority
+	else
+		overflow arguments
+		
