@@ -51,7 +51,12 @@ module.exports = function () {
 			}
 			
 			var stringNode = unwrap(unwrappedArgumentNode.nodes[0]);
-			var loc = url.parse(stringNode.string || stringNode.toString());
+			var oldUrl = stringNode.string || stringNode.toString();
+			if (/^data:/i.test(oldUrl)) {
+				return originalNode;
+			}
+			
+			var loc = url.parse(oldUrl);
 			var ext = path.extname(loc.pathname);
 			loc.pathname = path.join(path.dirname(loc.pathname),
 									 path.basename(loc.pathname, ext) + '@2x' + ext);

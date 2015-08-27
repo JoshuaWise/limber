@@ -8,23 +8,22 @@
  * 		absolute left right 0
  * 		absolute left right
  * 		relative left 5px, top 20px
- * 		fixed null
  * 		static auto
  */
 static()
-	position static
+	position static -copy-priority(last(arguments))
 	-positions(arguments)
 	
 relative()
-	position relative
+	position relative -copy-priority(last(arguments))
 	-positions(arguments)
 	
 absolute()
-	position absolute
+	position absolute -copy-priority(last(arguments))
 	-positions(arguments)
 	
 fixed()
-	position fixed
+	position fixed -copy-priority(last(arguments))
 	-positions(arguments)
 	
 -positions(groups)
