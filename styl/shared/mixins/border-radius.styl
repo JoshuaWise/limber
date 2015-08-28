@@ -6,10 +6,10 @@
  * 		border-radius top 4px, bottom inherit
  * 		border-radius 4px, bottom right 50%
  */
-border-radius(groups...)
-	if -border-radius-alternative-syntax(groups)
-		groups = (null groups) unless list-separator(groups) == ','
-		priority = -extract-priority(last(groups))
+border-radius()
+	if -border-radius-alternative-syntax(arguments)
+		priority = -get-priority(arguments)
+		groups = list-separator(arguments) == ',' ? arguments : (null arguments)
 		result-properties = -parse-groups(groups, -border-radius-options)
 		-border-radius-print-properties(result-properties, priority)
 	else
@@ -72,9 +72,9 @@ border-radius(groups...)
 		
 	for cross-direction in cross
 		if cross-direction in given-directions
-			push(interpreted-directions, unquote(axis == v-directions ? direction + '-' + cross-direction : cross-direction + '-' + direction))
+			push(interpreted-directions, axis == v-directions ? direction + '-' + cross-direction : cross-direction + '-' + direction)
 			if includes-opposite
-				push(interpreted-directions, unquote(axis == v-directions ? opposite + '-' + cross-direction : cross-direction + '-' + opposite))
+				push(interpreted-directions, axis == v-directions ? opposite + '-' + cross-direction : cross-direction + '-' + opposite)
 				
 	return interpreted-directions
 	

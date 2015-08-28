@@ -1,0 +1,6 @@
+/**
+ * Provides a 1px text-outline mixin, with customizable color.
+ */
+text-outline(color)
+	text-shadow -1px -1px 0 color, 1px -1px 0 color, -1px 1px 0 color, 1px 1px 0 color -get-priority(arguments)
+	

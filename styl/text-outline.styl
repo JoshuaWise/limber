@@ -1,8 +1,0 @@
-/**
- * Provides a 1px text-outline mixin, with customizable color.
- */
-text-outline(color, priority = unquote(''))
-	error('text-outline argument must be a color') unless color is a 'color'
-	error('too many arguments') unless priority == !important or priority == ''
-	text-shadow -1px -1px 0 color, 1px -1px 0 color, -1px 1px 0 color, 1px 1px 0 color priority
-	

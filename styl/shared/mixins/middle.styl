@@ -1,0 +1,29 @@
+/**
+ * Provides the 'middle' convenience property, which takes either 'x', 'y', or
+ * 'xy', and centers the given element on that axis. The element must have its
+ * position set to something besides static for this to work. You can optionally
+ * set its position within this property, as a second argument after the axis.
+ * Usage:
+ *  	middle x
+ * 		middle y absolute
+ * 		middle xy relative
+ */
+middle(axis, positioning == null)
+	priority = -get-priority(arguments)
+	if positioning in ('absolute' 'relative' 'fixed' 'static')
+		position positioning priority
+	if axis == 'x'
+		margin-right -50% priority if positioning in ('absolute' 'fixed')
+		left 50% priority
+		transform translateX(-50%) priority
+	else if axis == 'y'
+		top 50% priority
+		transform translateY(-50%) priority
+	else if axis == 'xy'
+		margin-right -50% priority if positioning in ('absolute' 'fixed')
+		left 50% priority
+		top 50% priority
+		transform translate(-50%, -50%) priority
+	else
+		error('invalid axis argument (expected x, y, or xy)')
+		

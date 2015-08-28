@@ -11,28 +11,25 @@
  * 		static auto
  */
 static()
-	position static -copy-priority(last(arguments))
-	-positions(arguments)
+	-positions('static', arguments)
 	
 relative()
-	position relative -copy-priority(last(arguments))
-	-positions(arguments)
+	-positions('relative', arguments)
 	
 absolute()
-	position absolute -copy-priority(last(arguments))
-	-positions(arguments)
+	-positions('absolute', arguments)
 	
 fixed()
-	position fixed -copy-priority(last(arguments))
-	-positions(arguments)
+	-positions('fixed', arguments)
 	
--positions(groups)
-	return unless length(groups) > 0
-	groups = (null groups) unless list-separator(groups) == ','
-	priority = -extract-priority(last(groups))
-	result-properties = -parse-groups(groups, -positions-options)
-	{property} value priority for property, value in result-properties
-	
+-positions(positioning, args)
+	priority = -get-priority(args)
+	position unquote(positioning) priority
+	if length(args) > 0
+		groups = list-separator(args) == ',' ? args : (null args)
+		result-properties = -parse-groups(groups, -positions-options)
+		{property} value priority for property, value in result-properties
+		
 -positions-validator(value)
 	return true if value in -global-values or value == 'auto'
 	return false unless length(value) == 1

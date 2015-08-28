@@ -3,7 +3,7 @@
  * value-range[0] and value-range[1], depending on the viewport width's
  * position between viewport-range[0] and viewport-range[1].
  * By default, viewport-range is (phone-range[0] desktop-range[1]).
- * NOTE: this function is not available in 'essentials' version.
+ * NOTE: this function is only available in the full version of limber.
  */
 if -limber-full == true
 	between(value-range, viewport-range = phone-range[0] desktop-range[1])
@@ -76,13 +76,6 @@ sort(list, fn = null)
 					list[j + 1] = list[j]
 		list[actual-j + 1] = value
 	return list
-	
-/**
- * Retrieves the first element of a list. 
- * Provided as a semantic opposite of last().
- */
-first(list)
-	return list[0]
 	
 /**
  * Returns a clone of the given source, but with the element at index `index`

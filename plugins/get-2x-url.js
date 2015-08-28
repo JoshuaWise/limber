@@ -41,13 +41,13 @@ module.exports = function () {
 					return node;
 				}
 			}
-			return none;
+			return none.clone();
 		}
 		
 		function transformTo2xUrl(originalNode) {
 			var unwrappedArgumentNode = utilsUnwrap(originalNode.args)
 			if (!unwrappedArgumentNode.nodes.length) {
-				return none;
+				return none.clone();
 			}
 			
 			var stringNode = unwrap(unwrappedArgumentNode.nodes[0]);
