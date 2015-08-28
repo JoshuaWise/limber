@@ -31,13 +31,14 @@ module.exports = function () {
 			return expr;
 		}
 		
-		function getFirstUrlNode(args) {
-			for (var i=0, len=args.length; i<len; i++) {
+		function getLastUrlNode(args) {
+			var i = args.length;
+			while (i--) {
 				var arg = args[i];
 				if (!arg) continue;
 				
 				var node = unwrap(arg);
-				if (node.nodeName === 'call' || node.operate('==', none).isTrue) {
+				if (node.nodeName === 'call' || none.operate('==', node).isTrue) {
 					return node;
 				}
 			}
@@ -52,11 +53,11 @@ module.exports = function () {
 			
 			var stringNode = unwrap(unwrappedArgumentNode.nodes[0]);
 			var oldUrl = stringNode.string || stringNode.toString();
-			if (/^data:/i.test(oldUrl)) {
+			if (/^data:|^(''|"")$/i.test(oldUrl)) {
 				return originalNode;
 			}
 			
-			var loc = url.parse(oldUrl);
+			var loc = url.parse(oldUrl, false, true);
 			var ext = path.extname(loc.pathname);
 			loc.pathname = path.join(path.dirname(loc.pathname),
 									 path.basename(loc.pathname, ext) + '@2x' + ext);
@@ -68,7 +69,7 @@ module.exports = function () {
 		}
 		
 		style.define('-get-2x-url', function() {
-			var urlNode = getFirstUrlNode(arguments);
+			var urlNode = getLastUrlNode(arguments);
 			
 			if (urlNode.nodeName === 'call' && urlNode.name.toLowerCase() === 'url') {
 				urlNode = transformTo2xUrl(urlNode)

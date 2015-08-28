@@ -10,7 +10,8 @@
  */
 middle(axis, positioning = null)
 	priority = -get-priority(arguments)
-	if positioning in ('absolute' 'relative' 'fixed' 'static')
+	unless positioning == null
+		positioning = unquote('%s' % positioning)
 		position positioning priority
 	if axis == 'x'
 		margin-right -50% priority if positioning in ('absolute' 'fixed')
@@ -25,5 +26,5 @@ middle(axis, positioning = null)
 		top 50% priority
 		transform translate(-50%, -50%) priority
 	else
-		error('invalid axis argument (expected x, y, or xy)')
+		error('invalid argument (expected x, y, or xy)')
 		
