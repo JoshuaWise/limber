@@ -1,6 +1,6 @@
 add vendor support
 
-confirm essentials framework
+confirm micro framework
 
 make sure the p and hx base styles are how I want them (em? inherit? etc.)
 
@@ -11,6 +11,7 @@ decide what I want to do with body {min-height: 100%} (vh?)
 add grid module
 
 make sure outdated browser test accounts for everything used in framework
+(use modernizr?)
 
 confirm full framework
 

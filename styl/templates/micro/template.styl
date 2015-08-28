@@ -2,6 +2,11 @@
 	box-sizing inherit
 	text-rendering geometricPrecision
 	
+::selection
+	text-shadow none
+::-moz-selection
+	text-shadow none
+	
 html
 	background-color #fff
 	box-sizing border-box
@@ -23,5 +28,10 @@ img
 	display inline-block
 	height auto
 	max-width 100%
+	
+audio, canvas, iframe, img, svg, video
 	vertical-align middle
+	
+textarea
+	resize vertical
 	
