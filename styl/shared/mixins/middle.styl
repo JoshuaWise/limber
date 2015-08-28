@@ -8,7 +8,7 @@
  * 		middle y absolute
  * 		middle xy relative
  */
-middle(axis, positioning == null)
+middle(axis, positioning = null)
 	priority = -get-priority(arguments)
 	if positioning in ('absolute' 'relative' 'fixed' 'static')
 		position positioning priority
