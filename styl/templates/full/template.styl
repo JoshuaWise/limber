@@ -12,7 +12,6 @@
 html
 	background-color background-color
 	box-sizing border-box
-	height 100% // ideally, we could remove this, and make body have min-height 100vh
 	overflow-y auto
 	font-size 100vw !important
 	@media viewport-min
@@ -23,7 +22,7 @@ html
 body
 	position relative
 	max-width desktop-range[1]
-	min-height 100% // ideally, this would be 100vh
+	min-height 100vh
 	overflow-x hidden
 	color foreground-color
 	font-family base-font-family
