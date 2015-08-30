@@ -1,5 +1,3 @@
-make example via build system with grunt and stylus JavaScript API,
-
 make sure the p and hx base styles are how I want them (em? inherit? etc.)
 also what I want to do with "font-scale-" in site-globals.styl and validate-globals.styl
 
