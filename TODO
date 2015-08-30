@@ -10,9 +10,29 @@ decide what I want to do with body {min-height: 100%} (vh?)
 
 add grid module
 
+add ie10 polyfills
+(dataset, flexbox, Uint8ClampedArray, pointer-events: non, classList.prototype.toggle)
+
 make sure outdated browser test accounts for everything used in framework
 (use modernizr?)
+(make sure browser can handle 'use strict')
 
 confirm full framework
 
-http://caniuse.com/#feat=flexbox
+
+NOTE:
+supported browsers:
+"
+	chrome >= 31,
+	ff >= 31,
+	safari >= 7,
+	ie >= 10,
+	edge >= 1,
+	opera >= 28,
+	and_chr >= 44,
+	and_ff >= 40,
+	android >= 40,
+	ios >= 7,
+	ie_mob >= 11
+	op_mob >= 30,
+"
