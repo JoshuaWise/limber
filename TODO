@@ -1,8 +1,9 @@
+make example via build system with grunt and stylus JavaScript API,
+
 make sure the p and hx base styles are how I want them (em? inherit? etc.)
+also what I want to do with "font-scale-" in site-globals.styl and validate-globals.styl
 
 bring in JavaScript from Ryan's site
-
-decide what I want to do with body {min-height: 100%} (vh?)
 
 add grid module
 
@@ -31,6 +32,6 @@ supported browsers:
 	and_ff >= 40,
 	android >= 40,
 	ios >= 8,
-	ie_mob >= 11
-	op_mob >= 30,
+	ie_mob >= 11,
+	op_mob >= 30
 "
