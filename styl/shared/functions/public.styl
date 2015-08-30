@@ -97,3 +97,11 @@ force-px(value)
 	return null unless unit(value) == 'px' or value == 0
 	return (value)px
 	
+/**
+ * If the given value is truthy, nothing happens. Otherwise, throw an error
+ * message.
+ */
+assert(test-value, error-message = 'assert failed')
+	return if test-value
+	error(error-message)
+	

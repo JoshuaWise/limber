@@ -1,7 +1,3 @@
-add vendor support
-
-confirm micro framework
-
 make sure the p and hx base styles are how I want them (em? inherit? etc.)
 
 bring in JavaScript from Ryan's site
@@ -12,6 +8,8 @@ add grid module
 
 add ie10 polyfills
 (dataset, flexbox, Uint8ClampedArray, pointer-events: non, classList.prototype.toggle)
+
+vendor support should be handled by autoprefixer?
 
 make sure outdated browser test accounts for everything used in framework
 (use modernizr?)

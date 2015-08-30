@@ -26,6 +26,37 @@ use('./plugins/convert-to-list.js')
 	return last(last(args)) == !important ? !important : unquote('')
 	
 /**
+ * Returns a Boolean, indicating whether the given value is a list of 2
+ * ascending non-negative px values.
+ */
+-is-positive-px-range(value)
+	return false unless length(value) == 2
+	return false unless value[0] is a 'unit' and value[1] is a 'unit'
+	return false unless unit(value[0]) == 'px' and unit(value[1]) == 'px'
+	return false unless value[0] >= 0 and value[1] >= 0
+	return false unless value[0] < value[1]
+	return true
+	
+/**
+ * Returns a Boolean, indicating whether the given value is a non-negative,
+ * unitless number.
+ */
+-is-positive-number(value)
+	return false unless length(value) == 1
+	return false unless value is a 'unit'
+	return false unless unit(value) == ''
+	return false unless value >= 0
+	return true
+	
+/**
+ * Returns a Boolean, indicating whether the given value is a color.
+ */
+-is-color(value)
+	return false unless length(value) == 1
+	return false unless value is a 'color'
+	return true
+	
+/**
  * Parsed a list of groups, which each contain directions folllowed by a value.
  * Returns a hash of the resulting directions and their corresponding values.
  * If there is only one group, it must be prepended by null, to create a proper
