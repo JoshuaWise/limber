@@ -1,0 +1,29 @@
+/**
+ * Provides the 'size', 'min-size', and 'max-size' convenience properties,
+ * which define both width and height (or their min-/max- variants), in a
+ * single declaration.
+ * Usage:
+ *  	size 50px
+ * 		size 30% 2em
+ * 		min-size 33%
+ * 
+ * Inspired by nib, https://github.com/tj/nib
+ */
+size(w, h = null)
+	priority = -get-priority(arguments)
+	h = w if h == null
+	width w priority
+	height h priority
+	
+min-size(w, h = null)
+	priority = -get-priority(arguments)
+	h = w if h == null
+	min-width w priority
+	min-height h priority
+	
+max-size(w, h = null)
+	priority = -get-priority(arguments)
+	h = w if h == null
+	max-width w priority
+	max-height h priority
+	

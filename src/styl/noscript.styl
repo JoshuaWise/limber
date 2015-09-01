@@ -1,0 +1,22 @@
+/**
+ * Apply this id to a <noscript> tag at the top of your <body> element.
+ * You can place elements inside it, which will display only when JavaScript
+ * is disabled. If the element is left empty, a default message will display.
+ */
+#limber-noscript
+	background-color alpha(background-color, 1) // fallback
+	background-color background-color
+	position absolute // fallback
+	fixed top left
+	margin 0
+	size 100%
+	z-index 1000000
+	text-align center
+	&:after
+		content 'JavaScript must be enabled to view this site.'
+		absolute 0
+		margin auto
+		height 1.5em
+	&:not(:empty):after
+		content none
+		

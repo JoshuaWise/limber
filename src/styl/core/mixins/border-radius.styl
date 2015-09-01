@@ -1,0 +1,86 @@
+/**
+ * Backwards-compatible border-radius mixin, allowing for alternative syntax.
+ * Usage:
+ *  	border-radius bottom 4px
+ * 		border-radius top left 1em
+ * 		border-radius top 4px, bottom inherit
+ * 		border-radius 4px, bottom right 50%
+ *
+ * Inspired by nib, https://github.com/tj/nib
+ */
+border-radius()
+	if -border-radius-alternative-syntax(arguments)
+		priority = -get-priority(arguments)
+		groups = list-separator(arguments) == ',' ? arguments : (null arguments)
+		result-properties = -parse-groups(groups, -border-radius-options)
+		-border-radius-print-properties(result-properties, priority)
+	else
+		border-radius arguments
+		
+-border-radius-alternative-syntax(args)
+	return true if list-separator(args) == ','
+	return true if arg in -global-directions for arg in args
+	return false
+	
+-border-radius-print-properties(properties, priority)
+	top-left = properties['top-left']
+	top-right = properties['top-right']
+	bottom-left = properties['bottom-left']
+	bottom-right = properties['bottom-right']
+	if length(keys(properties)) != 4 or -global-value-in(top-left top-right bottom-left bottom-right)
+		for direction, value in properties
+			border-{direction}-radius value priority
+	else
+		length-top-left = length(top-left)
+		length-top-right = length(top-right)
+		length-bottom-left = length(bottom-left)
+		length-bottom-right = length(bottom-right)
+		if 2 in (length-top-left length-top-right length-bottom-left length-bottom-right)
+			push(top-left, top-left) if length-top-left == 1
+			push(top-right, top-right) if length-top-right == 1
+			push(bottom-left, bottom-left) if length-bottom-left == 1
+			push(bottom-right, bottom-right) if length-bottom-right == 1
+			border-radius top-left[0] top-right[0] bottom-right[0] bottom-left[0] / top-left[1] top-right[1] bottom-right[1] bottom-left[1] priority
+		else
+			border-radius top-left top-right bottom-right bottom-left priority
+			
+-border-radius-validator(value)
+	return true if value in -global-values
+	len = length(value)
+	return false unless len == 1 or len == 2
+	return false unless value[0] is a 'unit' or value[0] is a 'literal'
+	return false unless len == 1 or value[1] is a 'unit' or value[1] is a 'literal'
+	return true
+	
+-border-radius-transformer(given-directions)
+	// If there are no given directions, assume all directions.
+	return ('top-left' 'top-right' 'bottom-left' 'bottom-right') unless length(given-directions)
+	
+	v-directions = ('top' 'bottom')
+	h-directions = ('left' 'right')
+	interpreted-directions = ()
+	
+	direction = given-directions[0]
+	axis = direction in v-directions ? v-directions : h-directions
+	cross = axis == v-directions ? h-directions : v-directions
+	opposite = direction == axis[0] ? axis[1] : axis[0]
+	
+	includes-opposite = opposite in given-directions
+	
+	// If there are no cross directions specified, assume both of them.
+	unless cross[0] in given-directions or cross[1] in given-directions
+		push(given-directions, cross[0])
+		push(given-directions, cross[1])
+		
+	for cross-direction in cross
+		if cross-direction in given-directions
+			push(interpreted-directions, axis == v-directions ? direction + '-' + cross-direction : cross-direction + '-' + direction)
+			if includes-opposite
+				push(interpreted-directions, axis == v-directions ? opposite + '-' + cross-direction : cross-direction + '-' + opposite)
+				
+	return interpreted-directions
+	
+-border-radius-options = {
+	'validator': -border-radius-validator
+	'direction-transformer': -border-radius-transformer
+}

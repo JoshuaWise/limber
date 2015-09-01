@@ -1,0 +1,9 @@
+error('limber can not be imported twice') if -limber-version is defined
+
+-limber-version = json('../bower.json', {hash: true, leave-strings: true})['version']
+vendors = 'official'
+
+@require('./styl/core')
+@require('./styl/template')
+@require('./styl/noscript')
+@require('./styl/loader')

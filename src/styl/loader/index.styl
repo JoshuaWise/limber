@@ -1,0 +1,63 @@
+/**
+ * Apply this id to a <div> tag at the top of your <body> element.
+ * It will display a loading screen with an animated gif.
+ * You can change the displayed graphic by assigning a url() to 
+ * `loader-graphic`.
+ * 
+ * You can also insert your graphic manually in the HTML, or by adding an
+ * "icon-" class to the #limber-loader element. If you choose one of these
+ * methods, you can set `loader-graphic` to "none".
+ * 
+ * By default, adding the class "animate" to #limber-loader will cause it to
+ * spin indefinitely, mimicing the behavior of typical loading spinners.
+ * If you specify your own loading graphic, and it's not an animated gif, you
+ * can use this class to animate it. You can also override the default animation
+ * by specifying `loader-animation`.
+ */
+
+loader-graphic ?= url('./loader-graphic.gif')
+loader-background-color ?= background-color
+loader-fade-time ?= 0.5s
+loader-animation ?= loader-default-animation 2s linear 0s infinite
+
+assert(-is-bg-image(loader-graphic), 'must be a valid background-image image value')
+assert(-is-color(loader-background-color), 'must be a color')
+assert(-is-time(loader-fade-time), 'must be a valid time unit (s or ms)')
+
+#limber-loader
+	background-color alpha(loader-background-color, 1) // fallback
+	background-color loader-background-color
+	position absolute // fallback
+	fixed 0
+	margin 0
+	z-index 999999
+	transition visibility 0s, opacity loader-fade-time
+	&.loaded
+		transition-delay (loader-fade-time == 0 ? 0s : loader-fade-time + 0.1s), 0s
+		visibility hidden
+		opacity 0
+		pointer-events none
+		
+	&:before, &:after, > *
+		absolute 0
+	&:before, > * // This is for user-inserted content.
+		margin auto
+		height 1.5em
+		text-align center
+		user-select none
+	unless loader-graphic == 'none'
+		&:after
+			content ''
+			background no-repeat 50% 50% loader-graphic
+			z-index -1
+			
+	&.animate
+		&:before, &:after, > *
+			animation: loader-animation;
+			
+if 'loader-default-animation' in loader-animation
+	@keyframes loader-default-animation {
+	    0% {transform: rotateZ(0deg);}
+	    100% {transform: rotateZ(360deg);}
+	}
+	

@@ -1,0 +1,85 @@
+/**
+ * Returns a copy of a portion of a list. Mirrors the functionality and
+ * implementation of JavaScript's Array.prototype.slice. If only the first
+ * argument is provided, a shallow copy of the list is returned.
+ */
+slice(list, start = 0, end = null)
+	len = length(list)
+	end = end == null ? len : end
+	unless start is a 'unit' and end is a 'unit'
+		error('second and third argumetns of slice() must be numbers')
+	unless unit(start) == '' and unit(end) == ''
+		error('second and third argumetns of slice() cannot have units')
+	k = start < 0 ? max(len + start, 0) : min(start, len)
+	final = end < 0 ? max(len + end, 0) : min(end, len)
+	result = ()
+	return result if k >= final
+	for i in (k ... final)
+		push(result, list[i])
+	return result
+	
+/**
+ * Sorts a list IN PLACE (no copy is made), and returns the list.
+ * The default sorting function compares numbers by value, and strings by
+ * Unicode position.
+ *
+ * Examples:
+ * 		sort(1 5 7 -15 845) => (-15 1 5 7 845)
+ * 		sort('zebra' 'apple' 'blueberry') => ('apple' 'blueberry' 'zebra')
+ * 		sort('90' '600' '77') => ('600' '77' '90')
+ * 
+ * If you specify a sorting function as a second argument, that function should
+ * return true only if its first argument is equal to or less than the second
+ * argument. Otherwise, it should return false.
+ */
+sort(list, fn = null)
+	len = length(list)
+	return list unless len > 1
+	
+	if fn == null
+		fn = @(a, b) {
+			a <= b
+		}
+		
+	for i in (1 ... len)
+		value = list[i]
+		actual-j = i - 1
+		broke-loop = false
+		for j in (actual-j .. -1)
+			unless broke-loop
+				actual-j = j
+				if j < 0 or fn(list[j], value)
+					broke-loop = true 
+				else
+					list[j + 1] = list[j]
+		list[actual-j + 1] = value
+	return list
+	
+/**
+ * Returns a clone of the given source, but with the element at index `index`
+ * replaced by `value`.
+ */
+change(source, index, value)
+	expr = clone(source)
+	expr[index] = value
+	return expr
+	
+/**
+ * If the given value is a px unit, or can be converted to px while maintaining
+ * its value, convert it to px and return it. Otherwise, null is returned.
+ * This is useful for validating user input for custom functions.
+ */
+force-px(value)
+	return null unless length(value) == 1
+	return null unless value is a 'unit'
+	return null unless unit(value) == 'px' or value == 0
+	return (value)px
+	
+/**
+ * If the given value is truthy, nothing happens. Otherwise, throw an error
+ * message.
+ */
+assert(test-value, error-message = 'assert failed')
+	error(error-message) unless test-value
+	return
+	

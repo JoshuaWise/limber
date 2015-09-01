@@ -1,14 +1,11 @@
+
+make all variables inside limber namespace hash?
+
+fix up template;
 make sure the p and hx base styles are how I want them (em? inherit? etc.)
 also what I want to do with "font-scale-" in site-globals.styl and validate-globals.styl
 
-bring in JavaScript from Ryan's site
-
 add grid module
-
-add ie10 polyfills
-(dataset, flexbox, Uint8ClampedArray, pointer-events: non, classList.prototype.toggle)
-
-vendor support should be handled by autoprefixer?
 
 make sure outdated browser test accounts for everything used in framework
 (use modernizr?)
@@ -23,7 +20,7 @@ supported browsers:
 	chrome >= 31,
 	ff >= 31,
 	safari >= 7,
-	ie >= 10,
+	ie >= 11,
 	edge >= 1,
 	opera >= 28,
 	and_chr >= 44,

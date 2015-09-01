@@ -1,0 +1,31 @@
+/**
+ * Used internally to apply "heading-" options from site-globals.
+ */
+-apply-heading-styles()
+	properties = {
+		font-family: heading-font-family
+		font-size: heading-font-size
+		font-weight: heading-font-weight
+		font-style: heading-font-style
+		line-height: heading-line-height
+		margin: heading-margin
+	}
+	heading-names = 'h1' 'h2' 'h3' 'h4' 'h5' 'h6'
+	backtrack-until-non-null = @(values, start) {
+		return values[j] if values[j] != null for j in (start .. 0)
+	}
+	rules = ()
+	for property, values in properties
+		error('first value of "heading-" option cannot be null') if values[0] == null
+		single-value = list-separator(values) != ','
+		i = 0
+		for heading-name in heading-names
+			entry = {}
+			entry[property] = single-value ? values : backtrack-until-non-null(values, i)
+			push(rules, {
+				'selector': heading-name
+				'properties': entry
+			})
+			i = i + 1
+	-print-rule(rule) for rule in -combine-rules(rules)
+	

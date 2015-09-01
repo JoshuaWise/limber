@@ -1,0 +1,21 @@
+/**
+ * Returns a calc() function that evaluates to a px value between
+ * value-range[0] and value-range[1], depending on the viewport width's
+ * position between viewport-range[0] and viewport-range[1].
+ * By default, viewport-range is (phone-range[0] desktop-range[1]).
+ * NOTE: this function is only available in the full version of limber.
+ */
+between(value-range, viewport-range = phone-range[0] desktop-range[1])
+	unless length(value-range) == 2 and length(viewport-range) == 2
+		error('each argument must be a tuplet of two values')
+	value-min = force-px(value-range[0])
+	value-max = force-px(value-range[1])
+	view-min = force-px(viewport-range[0])
+	view-max = force-px(viewport-range[1])
+	unless value-min and value-max and view-min and view-max
+		error('arguments can only contain px units')
+	return value-min if value-max - value-min == 0
+	return (value-min + value-max) / 2 if view-max - view-min == 0
+	scaleYOverX = unit((view-max - view-min) / (value-max - value-min), '');
+	return s('calc(1rem / %s - %s)', scaleYOverX, view-min / scaleYOverX - value-min)
+	
