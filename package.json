@@ -2,7 +2,8 @@
   "name": "limber",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "$(npm bin)/gulp build-example"
+    "build": "$(npm bin)/gulp build-example",
+    "watch": "$(npm bin)/gulp watch"
   },
   "repository": {
     "type": "git",

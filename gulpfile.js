@@ -76,5 +76,26 @@ gulp.task('build-example-css', function () {
 		.pipe(gulp.dest(path.dirname(destPath)));
 });
 
-gulp.task('build-example', ['build-example-css', 'build-example-js']);
+gulp.task('build-example-app-css', function () {
+	var sourcePath = './examples/app.styl';
+	var destPath = './examples/app.css';
+	
+	return gulp.src(sourcePath)
+		.pipe(sourcemaps.init())
+		.pipe(stylus({
+			sourcemap: true,
+			linenos: true
+		}))
+		.pipe(rename(path.basename(destPath)))
+		.pipe(sourcemaps.write('.'))
+		.pipe(gulp.dest(path.dirname(destPath)));
+});
+
+gulp.task('watch', function () {
+	gulp.watch(['./src/*.styl', './src/styl/**/*.styl', './src/styl/**/*.js'], ['build-example-css']);
+	gulp.watch(['./src/*.js', './src/js/**/*.js'], ['build-example-js']);
+	gulp.watch('./examples/**/*.styl', ['build-example-app-css']);
+});
+
+gulp.task('build-example', ['build-example-css', 'build-example-js', 'build-example-app-css']);
 gulp.task('default', ['build-example']);
