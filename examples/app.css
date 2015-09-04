@@ -3,4 +3,14 @@
 
 /* line 1 : /Users/josh/code/projects/limber/node_modules/gulp-stylus/node_modules/stylus/lib/functions/index.styl */
 
+/* line 1 : /Users/josh/code/projects/limber/examples/app.styl */
+p {
+  max-width: 500px;
+}
+
+/* line 4 : /Users/josh/code/projects/limber/examples/app.styl */
+body {
+  padding: 0 100px;
+}
+
 /*# sourceMappingURL=app.css.map */

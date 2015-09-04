@@ -7,6 +7,6 @@
 	
 	setTimeout(function () {
 		limber.ready();
-	}, 1000);
+	}, 100);
 	
 }());

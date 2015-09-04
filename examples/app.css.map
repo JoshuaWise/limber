@@ -1,1 +1,1 @@
-{"version":3,"sources":[],"names":[],"mappings":"","file":"app.css","sourcesContent":[],"sourceRoot":"/source/"}
+{"version":3,"sources":["app.styl"],"names":[],"mappings":"AAAA;EACC,WAAU,MAAV;;AAED;EACC,SAAQ,QAAR","file":"app.css","sourcesContent":["p\n\tmax-width 500px\n\t\nbody\n\tpadding 0 100px"],"sourceRoot":"/source/"}
