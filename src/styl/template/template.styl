@@ -10,7 +10,7 @@
 	text-shadow none
 	
 html
-	background-color background-color
+	background-color darken(background-color, 6.67%)
 	box-sizing border-box
 	overflow-y auto
 	font-size 100vw !important
@@ -20,10 +20,14 @@ html
 		font-size desktop-range[1] !important
 		
 body
+	background-color background-color
 	position relative
 	max-width desktop-range[1]
 	min-height 100vh
 	overflow-x hidden
+	box-shadow 0 0 10px alpha(black, 0.1)
+	
+body, .base
 	color foreground-color
 	font-family base-font-family
 	font-size base-font-size
@@ -49,19 +53,9 @@ p
 	margin paragraph-margin
 	color inherit
 	font-family inherit
-	font-size 100%
+	font-size 1em
 	font-weight inherit
 	font-style inherit
-	line-height 100%
-	vertical-align baseline
-	
-.base
-	color foreground-color
-	font-family base-font-family
-	font-size base-font-size
-	font-weight base-font-weight
-	font-style base-font-style
-	line-height base-line-height
-	vertical-align baseline
+	line-height inherit
 	
 -apply-heading-styles()
