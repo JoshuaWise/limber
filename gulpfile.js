@@ -91,11 +91,11 @@ gulp.task('build-example-app-css', function () {
 		.pipe(gulp.dest(path.dirname(destPath)));
 });
 
-gulp.task('watch', function () {
+gulp.task('build-example', ['build-example-css', 'build-example-js', 'build-example-app-css']);
+gulp.task('default', ['build-example']);
+
+gulp.task('watch', ['build-example'], function () {
 	gulp.watch(['./src/*.styl', './src/styl/**/*.styl', './src/styl/**/*.js'], ['build-example-css']);
 	gulp.watch(['./src/*.js', './src/js/**/*.js'], ['build-example-js']);
 	gulp.watch('./examples/**/*.styl', ['build-example-app-css']);
 });
-
-gulp.task('build-example', ['build-example-css', 'build-example-js', 'build-example-app-css']);
-gulp.task('default', ['build-example']);

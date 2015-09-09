@@ -5,10 +5,11 @@
 
 loader-progress-background-color ?= loader-background-color
 loader-progress-foreground-color ?= primary-color
-loader-progress-thickness ?= 10px
+loader-progress-thickness ?= 2px
 loader-progress-position ?= 'top'
 loader-progress-direction ?= 'normal'
-loader-progress-blur ?= 0px
+loader-progress-blur ?= 1%
+loader-progress-transition-time ?= 0.5s
 
 assert(-is-color(loader-progress-background-color), 'must be a color')
 assert(-is-color(loader-progress-foreground-color), 'must be a color')
@@ -16,19 +17,18 @@ assert(-is-positive-unit(loader-progress-thickness), 'must be a non-negative uni
 assert(-is-direction(loader-progress-position), 'must be a direction')
 assert(loader-progress-direction == 'normal' or loader-progress-direction == 'reverse', 'must be either "normal" or "reverse"')
 assert(-is-positive-unit(loader-progress-blur), 'must be a non-negative unit')
+assert(-is-time(loader-progress-transition-time), 'must be a valid time unit (s or ms)')
 
-#limber-loader #limber-progress
-	-loader-progress-construct()
-	
 -loader-progress-construct()
 	row = loader-progress-position in ('top' 'bottom')
 	reverse = loader-progress-direction == 'reverse'
 	display flex
-	flex-direction s('%s%s', row ? 'row' : 'column', reverse ? '-reverse' : '')
-	{opposite-position(loader-progress-position)} auto
+	flex-direction s('%s%s', unquote(row ? 'row' : 'column'), unquote(reverse ? '-reverse' : ''))
+	absolute 0, opposite-position(loader-progress-position) auto
 	{row ? 'height' : 'width'} loader-progress-thickness
 	background-color loader-progress-background-color
 	font-size 0
+	transition font-size loader-progress-transition-time ease-out
 	&:before
 		content ''
 		flex 0 0 1em
@@ -42,3 +42,10 @@ assert(-is-positive-unit(loader-progress-blur), 'must be a non-negative unit')
 			padding-{blur-direction} blur-distance
 			background no-repeat linear-gradient(unquote('to ' + blur-direction), loader-progress-foreground-color, loader-progress-foreground-color s('calc(100% - %s)', blur-distance), transparent)
 			
+#limber-loader #limber-progress
+	-loader-progress-construct()
+	
+#limber-loader.loaded #limber-progress
+	transition all 0s
+	
+-define-var('loader-progress-unit', loader-progress-position in ('top' 'bottom') ? 'vw' : 'vh')

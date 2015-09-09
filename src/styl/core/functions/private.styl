@@ -104,6 +104,10 @@ use('./use/is-image.js')
 	return false unless value >= 0% and value <= 100%
 	return true
 	
+-define-var(name, value)
+	meta.limber-var-{name}
+		font-family '' + value
+		
 /**
  * Parsed a list of groups, which each contain directions folllowed by a value.
  * Returns a hash of the resulting directions and their corresponding values.

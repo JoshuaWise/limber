@@ -42,8 +42,9 @@ assert(-is-time(loader-fade-time), 'must be a valid time unit (s or ms)')
 		opacity 0
 		pointer-events none
 		
-	&:before, &:after, > *, #limber-progress
+	&:before, &:after, > *:not(#limber-progress)
 		absolute 0
+		animation loader-fade-in loader-fade-time linear (loader-fade-time / 2) both
 	&:before, > *:not(#limber-progress) // This is for user-inserted content.
 		margin auto
 		height 1.5em
@@ -67,3 +68,7 @@ if 'loader-default-animation' in loader-animation
 	    100% {transform: rotateZ(360deg);}
 	}
 	
+@keyframes loader-fade-in {
+	0% {opacity: 0;}
+	100% {opacity: 1;}
+}
