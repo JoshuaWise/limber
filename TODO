@@ -1,6 +1,3 @@
-
-make all variables inside limber namespace hash?
-
 fix up template;
 make sure the p and hx base styles are how I want them (em? inherit? etc.)
 also what I want to do with "font-scale-" in site-globals.styl and validate-globals.styl
@@ -13,9 +10,8 @@ make sure outdated browser test accounts for everything used in framework
 
 confirm full framework
 
-
-NOTE:
-supported browsers:
+--------------------------------------------------------------------------------
+Supported browsers:
 "
 	chrome >= 31,
 	ff >= 31,
@@ -30,3 +26,9 @@ supported browsers:
 	ie_mob >= 11,
 	op_mob >= 30
 "
+--------------------------------------------------------------------------------
+When Stylus 1.0 is released:
+  - add newly required semicolons to all properties
+  - use proper arrays instead of lists
+  - put all limber variables in a namespaced hash
+  

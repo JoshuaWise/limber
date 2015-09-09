@@ -39,6 +39,17 @@ use('./use/is-image.js')
 	return true
 	
 /**
+ * Returns a Boolean, indicating whether the given value is a non-negative
+ * unit value, or 0.
+ */
+-is-positive-unit(value)
+	return false unless length(value) == 1
+	return false unless value is a 'unit'
+	return false unless unit(value) or value == 0
+	return false unless value >= 0
+	return true
+	
+/**
  * Returns a Boolean, indicating whether the given value is a non-negative,
  * unitless number.
  */
@@ -72,6 +83,25 @@ use('./use/is-image.js')
 	return false unless length(value) == 1
 	return false unless value is a 'unit'
 	return false unless unit(value) == 's' or unit(value) == 'ms' or value == 0
+	return true
+	
+/**
+ * Returns a Boolean, indicating whether the given value is a direction.
+ */
+-is-direction(value)
+	return false unless length(value) == 1
+	return false unless value in -global-directions
+	return true
+	
+/**
+ * Returns a Boolean, indicating whether the given value is a percentage between
+ * 0% and 100%.
+ */
+-is-percentage(value)
+	return false unless length(value) == 1
+	return false unless value is a 'unit'
+	return false unless unit(value) == '%'
+	return false unless value >= 0% and value <= 100%
 	return true
 	
 /**

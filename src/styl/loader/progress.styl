@@ -1,0 +1,44 @@
+/**
+ * Inside the #limber-loader <div>, you can add a #limber-progress <div>,
+ * which will add a customizable loading bar to the loading screen.
+ */
+
+loader-progress-background-color ?= loader-background-color
+loader-progress-foreground-color ?= primary-color
+loader-progress-thickness ?= 10px
+loader-progress-position ?= 'top'
+loader-progress-direction ?= 'normal'
+loader-progress-blur ?= 0px
+
+assert(-is-color(loader-progress-background-color), 'must be a color')
+assert(-is-color(loader-progress-foreground-color), 'must be a color')
+assert(-is-positive-unit(loader-progress-thickness), 'must be a non-negative unit')
+assert(-is-direction(loader-progress-position), 'must be a direction')
+assert(loader-progress-direction == 'normal' or loader-progress-direction == 'reverse', 'must be either "normal" or "reverse"')
+assert(-is-positive-unit(loader-progress-blur), 'must be a non-negative unit')
+
+#limber-loader #limber-progress
+	-loader-progress-construct()
+	
+-loader-progress-construct()
+	row = loader-progress-position in ('top' 'bottom')
+	reverse = loader-progress-direction == 'reverse'
+	display flex
+	flex-direction s('%s%s', row ? 'row' : 'column', reverse ? '-reverse' : '')
+	{opposite-position(loader-progress-position)} auto
+	{row ? 'height' : 'width'} loader-progress-thickness
+	background-color loader-progress-background-color
+	font-size 0
+	&:before
+		content ''
+		flex 0 0 1em
+		if loader-progress-blur == 0
+			background-color loader-progress-foreground-color
+		else
+			blur-distance = unit(loader-progress-blur) == '%' ? unit(loader-progress-blur, row ? 'vw' : 'vh') : loader-progress-blur
+			blur-direction = row ? 'right' : 'bottom'
+			blur-direction = opposite-position(blur-direction) if reverse
+			box-sizing content-box
+			padding-{blur-direction} blur-distance
+			background no-repeat linear-gradient(unquote('to ' + blur-direction), loader-progress-foreground-color, loader-progress-foreground-color s('calc(100% - %s)', blur-distance), transparent)
+			
