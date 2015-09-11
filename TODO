@@ -1,13 +1,14 @@
-fix up template;
-what I want to do with "font-scale-" in site-globals.styl and validate-globals.styl
-
 add grid module
+
+- new version
 
 make sure outdated browser test accounts for everything used in framework
 (use modernizr?)
 (make sure browser can handle 'use strict')
 
 confirm full framework
+
+- new version
 
 --------------------------------------------------------------------------------
 Supported browsers:

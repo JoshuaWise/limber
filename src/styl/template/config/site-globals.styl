@@ -41,18 +41,6 @@ selection-color ?= alpha(primary-color, 0.3)
 *===========================*/
 
 /**
- * font-scale-tablet-base and font-scale-tablet-heading are used to modify
- * font sizes of paragraphs and headings, respectively, at tablet viewport sizes.
- * font-scale-desktop-base and font-scale-desktop-heading behave the same way,
- * but for desktop viewport sizes.
- */
-
-// font-scale-tablet-base ?= 1
-// font-scale-tablet-heading ?= 1
-// font-scale-desktop-base ?= 1
-// font-scale-desktop-heading ?= 1
-
-/**
  * Each of the "base-" options below are used to style text inside p elements,
  * or text that is otherwise not styled.
  */
@@ -73,9 +61,27 @@ paragraph-margin ?= 1.25em 0
  */
 
 heading-font-family ?= 'Helvetica Neue'\, 'Helvetica'\, sans-serif
-heading-font-size ?=  6em, 4em, 3em, 2em, 1.5em, 1.2em
+heading-font-size ?=  3em, 2.66667em, 2em, 1.33333em, 1em, 0.8em
 heading-font-weight ?= 700
 heading-font-style ?= normal
 heading-line-height ?= 1.25
 heading-margin ?= 0.5em 0
+
+/**
+ * Because limber is a mobile-first framework, the font options above apply
+ * directly to phone-sized viewports. It is common to want different font sizes
+ * on tablet or dekstop screens. You can use the "font-scale-" options below to
+ * accomplish this.
+ * Each of the "font-scale-" options below will modify the default font size by
+ * the given factor.
+ * 
+ * NOTE:
+ * Just as with the "heading-" options above, font-scale-heading-tablet and
+ * font-scale-heading-desktop can accept up to six comma-separated values.
+ */
+
+font-scale-base-tablet ?= 1
+font-scale-base-desktop ?= 1
+font-scale-heading-tablet ?= 1.5
+font-scale-heading-desktop ?= 2, 1.5
 

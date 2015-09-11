@@ -235,14 +235,20 @@ use('./use/is-image.js')
 	return results
 	
 /**
- * Given a rule hash, print the rule in actual CSS.
+ * Given a rule hash, or a list of rule hashes, print the rules in actual CSS.
  * Example:
- *  	-print-rule({selector: 'h1', properties: ({font-size: 40px} {left: 0})})
+ *  	-print-rules({selector: 'h1', properties: {font-size: 40px} {left: 0}})
  * 	=>	h1 {
  * 			font-size: 40px;
  * 			left: 0;
  * 		}
  */
+-print-rules(rules)
+	if rules[1] == null
+		-print-rule(rules[0]) if rules[0] is a 'object'
+	else
+		-print-rule(rule) for rule in rules
+		
 -print-rule(rule)
 	selector = rule.selector
 	properties = rule.properties

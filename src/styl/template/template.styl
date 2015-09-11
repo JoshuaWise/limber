@@ -34,7 +34,13 @@ body, .base
 	font-weight base-font-weight
 	font-style base-font-style
 	line-height base-line-height
-	
+	unless font-scale-base-tablet == 1
+		@media tablet
+			font-size base-font-size * font-scale-base-tablet
+	unless font-scale-base-desktop == font-scale-base-tablet
+		@media desktop
+			font-size base-font-size * font-scale-base-desktop
+			
 a:hover
 	cursor pointer
 	
