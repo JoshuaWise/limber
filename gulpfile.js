@@ -65,11 +65,11 @@ gulp.task('build-example-css', function () {
 		.pipe(cleanCss({
 			processImport: false,
 			rebase: false,
-			roundingPrecision: -1,
+			roundingPrecision: 5,
 			advanced: true,
 			aggressiveMerging: false,
 			restructuring: false,
-			shorthandCompacting: true
+			shorthandCompacting: false
 		}))
 		.pipe(rename(path.basename(destPath)))
 		.pipe(sourcemaps.write('.'))

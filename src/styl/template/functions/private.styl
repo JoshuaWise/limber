@@ -37,7 +37,7 @@
 		prev = backtrack-until-non-null(font-scale-heading-tablet, i)
 		return value != prev
 	}
-	tablet-options = {query: tablet, values: font-scale-heading-tablet, test: tablet-test}
+	tablet-options = {query: booklet, values: font-scale-heading-tablet, test: tablet-test}
 	desktop-options = {query: desktop, values: font-scale-heading-desktop, test: desktop-test}
 	
 	for media in (tablet-options desktop-options)

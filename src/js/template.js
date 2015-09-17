@@ -9,9 +9,8 @@ module.exports = function (Limber) {
 		phone: Limber.__getStylVariable('phone'),
 		tablet: Limber.__getStylVariable('tablet'),
 		desktop: Limber.__getStylVariable('desktop'),
-		phoneOnly: Limber.__getStylVariable('phone-only'),
-		tabletOnly: Limber.__getStylVariable('tablet-only'),
-		desktopOnly: Limber.__getStylVariable('desktop-only'),
+		mobile: Limber.__getStylVariable('mobile'),
+		booklet: Limber.__getStylVariable('booklet'),
 		viewportMin: Limber.__getStylVariable('viewport-min'),
 		viewportMax: Limber.__getStylVariable('viewport-max'),
 		retina: Limber.__getStylVariable('retina')

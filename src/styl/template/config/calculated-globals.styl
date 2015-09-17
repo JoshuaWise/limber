@@ -1,12 +1,10 @@
 tablet-range = phone-range[1] desktop-range[0]
 
-phone = 'all'
-tablet = s('(min-width: %s), print', tablet-range[0])
+phone = s('screen and (max-width: %s)', phone-range[1] - 0.1px)
+mobile = s('screen and (max-width: %s)', tablet-range[1] - 0.1px)
+tablet = s('screen and (min-width: %s) and (max-width: %s)', tablet-range[0], tablet-range[1] - 0.1px)
+booklet = s('(min-width: %s), print', tablet-range[0])
 desktop = s('(min-width: %s), print', desktop-range[0])
-
-phone-only = s('screen and (max-width: %s)', phone-range[1] - 0.1px)
-tablet-only = s('screen and (min-width: %s) and (max-width: %s)', tablet-range[0], tablet-range[1] - 0.1px)
-desktop-only = desktop
 
 viewport-min = s('screen and (max-width: %s)', phone-range[0])
 viewport-max = s('screen and (min-width: %s)', desktop-range[1])
@@ -14,11 +12,10 @@ viewport-max = s('screen and (min-width: %s)', desktop-range[1])
 retina = s('(-webkit-min-device-pixel-ratio: %s), (min--moz-device-pixel-ratio: %s), (-o-min-device-pixel-ratio: %s/1), (min-device-pixel-ratio: %s), (min-resolution: %sdpi), (min-resolution: %sdppx), print', retina-dppx, retina-dppx, retina-dppx, retina-dppx, retina-dppx * 96, retina-dppx)
 
 -define-var('phone', phone)
+-define-var('mobile', mobile)
 -define-var('tablet', tablet)
+-define-var('booklet', booklet)
 -define-var('desktop', desktop)
--define-var('phone-only', phone-only)
--define-var('tablet-only', tablet-only)
--define-var('desktop-only', desktop-only)
 -define-var('viewport-min', viewport-min)
 -define-var('viewport-max', viewport-max)
 -define-var('retina', retina)
