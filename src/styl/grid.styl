@@ -1,0 +1,80 @@
+/**
+ * A simple, flexbox grid system.
+ */
+
+grid-size ?= 12
+
+assert(-is-positive-number(grid-size), 'must be a positive number')
+ 
+-grid-build()
+	.row
+		display flex
+		flex-flow row wrap
+	.column
+		display flex
+		flex-flow column wrap
+	.row-reverse
+		display flex
+		flex-flow row-reverse wrap
+	.column-reverse
+		display flex
+		flex-flow column-reverse wrap
+	.row, .column, .row-reverse, .column-reverse
+		&.align-start
+			align-items flex-start
+		&.align-end
+			align-items flex-end
+		&.align-center
+			align-items center
+		&.align-baseline
+			align-items baseline
+		&.align-stretch
+			align-items stretch
+		&.no-wrap
+			flex-wrap nowrap
+		&.no-fill
+			align-content flex-start
+		> .cell
+			flex 1
+			&.align-start
+				align-self flex-start
+			&.align-end
+				align-self flex-end
+			&.align-center
+				align-self center
+			&.align-baseline
+				align-self baseline
+			&.align-stretch
+				align-self stretch
+			medias = {
+				phone: phone
+				tablet: tablet
+				desktop: desktop
+				mobile: mobile
+				booklet: booklet
+				viewport-min: viewport-min
+				viewport-max: viewport-max
+				retina: retina
+			}
+			for media, query in medias
+				if match('(only\s*)?\ball\b', query)
+					-grid-insert-sizes(media)
+					-grid-insert-orders(media)
+				else
+					@media query
+						-grid-insert-sizes(media)
+						-grid-insert-orders(media)
+			&.grow
+				flex-grow 1
+				
+-grid-insert-sizes(media)
+	for i in (1..grid-size)
+		&.{media}-{i}
+			flex 0 0 (round(i/grid-size*100, 5))%
+-grid-insert-orders(media)
+	for i in (0 - grid-size..grid-size)
+		&.{media}-order-{-grid-num-to-selector(i)}
+			order i
+-grid-num-to-selector(n)
+	return n < 0 ? '-' + abs(n) : n
+-grid-build()
