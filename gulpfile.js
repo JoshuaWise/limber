@@ -24,11 +24,15 @@ gulp.task('build-example-js', function() {
 		.pipe(sourcemaps.init({loadMaps: true}))
 		.pipe(uglify({
 			compress: {
-				unsafe: false
+				unsafe: false,
+				screw_ie8: true
 			},
 			mangle: {
 				keep_fnames: true,
-				screw_ie8: true,
+				screw_ie8: true
+			},
+			output: {
+				comments: /@license|@preserve|^!/i
 			}
 		}))
 		.pipe(rename(path.basename(destPath)))

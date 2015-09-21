@@ -30,6 +30,7 @@ assert(-is-time(loader-progress-transition-time), 'must be a valid time unit (s 
 	font-size 0
 	transition font-size loader-progress-transition-time ease-out
 	&:before
+		display block
 		content ''
 		flex 0 0 1em
 		if loader-progress-blur == 0
