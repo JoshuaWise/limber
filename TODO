@@ -1,9 +1,3 @@
-make sure outdated browser test accounts for everything used in framework
-(use modernizr)
-(make sure browser can handle 'use strict')
-
-- new version
-
 slim down grid system
 
 - new version
