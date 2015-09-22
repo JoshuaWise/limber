@@ -27,6 +27,8 @@ assert(-is-bg-image(loader-graphic), 'must be a valid background-image image val
 assert(-is-color(loader-background-color), 'must be a color')
 assert(-is-time(loader-fade-time), 'must be a valid time unit (s or ms)')
 
+-loader-fade-animation = loader-fade-in loader-fade-time linear (loader-fade-time / 2) both
+
 #limber-loader
 	background-color alpha(loader-background-color, 1) // fallback
 	background-color loader-background-color
@@ -44,7 +46,7 @@ assert(-is-time(loader-fade-time), 'must be a valid time unit (s or ms)')
 		
 	&:before, &:after, > *:not(#limber-progress)
 		absolute 0
-		animation loader-fade-in loader-fade-time linear (loader-fade-time / 2) both
+		animation -loader-fade-animation
 	&:before, > *:not(#limber-progress) // This is for user-inserted content.
 		margin auto
 		height 1.5em
@@ -58,7 +60,7 @@ assert(-is-time(loader-fade-time), 'must be a valid time unit (s or ms)')
 			
 	&.animate
 		&:before, &:after, > *:not(#limber-progress)
-			animation loader-animation
+			animation -loader-fade-animation, loader-animation
 	.animate
 		animation loader-animation
 		
