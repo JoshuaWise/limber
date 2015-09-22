@@ -18,7 +18,11 @@
 		a, input, button
 			display: none !important;
 			
-ol.semantic-list, ul.semantic-list // Provides style-less lists.
-	margin 0
-	list-style none
-	
+ol, ul 
+	&.list-block, &.list-inline // Provides style-less lists.
+		margin 0
+		padding 0
+		list-style none
+	&.list-inline
+		display inline-block
+		
