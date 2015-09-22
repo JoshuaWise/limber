@@ -3,7 +3,6 @@
  * value-range[0] and value-range[1], depending on the viewport width's
  * position between viewport-range[0] and viewport-range[1].
  * By default, viewport-range is (phone-range[0] desktop-range[1]).
- * NOTE: this function is only available in the full version of limber.
  */
 between(value-range, viewport-range = phone-range[0] desktop-range[1])
 	unless length(value-range) == 2 and length(viewport-range) == 2
