@@ -8,7 +8,7 @@ module.exports = {
 		var el = document.createElement('meta');
 		el.className = 'limber-var-' + variableName;
 		document.head.appendChild(el);
-		var value = getComputedStyle(el).fontFamily.replace(/^\'(.*)\'$/, '$1');
+		var value = getComputedStyle(el).fontFamily.replace(/^['"](.*)['"]$/, '$1');
 		document.head.removeChild(el);
 		return value;
 	}
