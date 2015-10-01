@@ -60,7 +60,8 @@
 				
 -is-list-of-positive-numbers(values)
 	if list-separator(values) == ','
-		return false unless -is-positive-number(value) for value in values
+		return false unless -is-positive-number(value) or value == null for value in values
+		return false unless -is-positive-number(values[0])
 		return true
 	else
 		return -is-positive-number(values)
