@@ -1,6 +1,5 @@
 'use strict';
 
-var util = require('util');
 var EventEmitter = require('events');
 var document = window.document;
 var Math = window.Math;
@@ -48,4 +47,4 @@ function Loader(progressUnit) {
 		loaderEl && loaderEl.classList[loaded ? 'add' : 'remove']('loaded');
 	}
 }
-util.inherits(Loader, EventEmitter);
+require('inherits')(Loader, EventEmitter);
