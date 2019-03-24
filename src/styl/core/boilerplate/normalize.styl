@@ -18,17 +18,20 @@ aside, main, menu, nav, figcaption,
 figure, footer, header, hgroup
 	display block
 
-audio, canvas, progress, video
-	display inline-block // Set `inline-block` not defined in IE 8~9.
-	vertical-align baseline // Fix v-align of `progress` in Chrome, FF, and O.
+h1 // `h1` inside `section` and `article` fix for FF 4+, Safari & Chrome.
+	font-size 2em
+	margin 0.67em 0
 
-audio:not([controls])
-	display none // Prevent displaying `audio` without controls.
-	height 0 // Remove excess height in iOS 5 devices.
+hr // Consistency between FF and others.
+	-moz-box-sizing content-box
+	box-sizing content-box
+	overflow visible
+	height 0
 
-[hidden], // Address `[hidden]` styling not present in IE 8~10.
-template // Hide the `template` element in IE 8~11, Safari, and FF < 22.
-	display none
+// Hack to fix odd `em`-unit font size rendering in all browsers.
+code, kbd, pre, samp
+	font-family monospace, monospace
+	font-size 1em
 
 a // No gray bg color in active links in IE 10.
 	background-color transparent
@@ -36,21 +39,12 @@ a // No gray bg color in active links in IE 10.
 		outline 0 // + readability when focused.
 
 abbr[title] // + style not present in IE 8~11, Safari, and Chrome.
-	border-bottom 1px dotted
-
-dfn // + style not present in Safari and Chrome.
-	font-style italic
-
-mark // + style not present in IE 8/9.
-	background #ff0
-	color #000
+	border-bottom none
+	text-decoration underline
+	text-decoration underline dotted
 
 b, strong // Increase usefulness in elements that are already bold.
 	font-weight bolder
-
-h1 // `h1` inside `section` and `article` fix for FF 4+, Safari & Chrome.
-	font-size 2em
-	margin 0.67em 0
 
 small // Consistent font-size across browsers.
 	font-size 80%
@@ -68,39 +62,16 @@ sub
 img // No border when inside `a` in IE 8~10.
 	border 0
 
-svg:not(:root) // Overflow should be hidden in IE 9~11.
-	overflow hidden
-
-figure // Remove awkward margin on figure elements.
-	margin 0
-
-hr // Consistency between FF and others.
-	-moz-box-sizing content-box
-	box-sizing content-box
-	height 0
-
-pre // Contain overflow and wrap words.
-	overflow auto
-
-// Hack to fix odd `em`-unit font size rendering in all browsers.
-code, kbd, pre, samp
-	font-family monospace, monospace
-	font-size 1em
-
-table // Remove most spacing between table cells.
-	border-collapse collapse
-	border-spacing 0
-td, th
-	padding 0
-
 // Known limitation: Chrome and Safari on OS X allow very limited
 // styling of `select`, unless a `border` property is set.
 button, input, optgroup, select, textarea
 	color inherit // Correct color not being inherited.
-	font inherit // Correct font properties not being inherited.
+	font inherit // Correct font family not being inherited.
+	font-size 100% // Don't inherit font-size which could be relative.
+	line-height normal // Correct weird line-height values.
 	margin 0 // Fix margins in FF 4+, Safari, and Chrome.
 
-button // Fix `overflow` set to `hidden` in IE 8/9/10/11.
+button, input // Fix `overflow` set to `hidden` in IE 8/9/10/11.
 	overflow visible
 
 button, select // Consistent text-transform across browsers.
@@ -108,21 +79,33 @@ button, select // Consistent text-transform across browsers.
 
 // Fix WebKit bug in Android 4.0, inability to style clickable `input` in
 // iOS and improve usability and consistency of cursor style.
-button, html input[type='button'], input[type='reset'], input[type='submit']
+button, html input[type='button'], html input[type='reset'], html input[type='submit']
 	cursor pointer
 	-webkit-appearance button
+	&::-moz-focus-inner
+		border 0
+		padding 0
 
-// Reset default cursor for disabled elements.
-button[disabled], html input[disabled]
-	cursor default
+fieldset // Consistent border, margin, and padding.
+	border 1px solid #c0c0c0
+	margin 0 2px
+	padding 0.35em 0.75em 0.625em
 
-// Remove inner padding and border in FF 4+.
-button::-moz-focus-inner, input::-moz-focus-inner
+legend // Hack to correct `color` not being inherited in IE 8/9/10/11.
+	box-sizing border-box
+	color inherit
+	display table
+	max-width 100%
 	border 0
 	padding 0
+	white-space normal
 
-input // Reset line-height again FF 4+ UA stylsheet.
-	line-height normal
+audio, canvas, progress, video
+	display inline-block // Set `inline-block` not defined in IE 8~9.
+	vertical-align baseline // Fix v-align of `progress` in Chrome, FF, and O.
+
+textarea // Remove default vertical scrollbar in IE 8~11.
+	overflow auto
 
 // Fix box sizing and excess padding in IE 8~10
 input[type='checkbox'], input[type='radio']
@@ -140,23 +123,56 @@ input[type='search']
 	-moz-box-sizing content-box
 	-webkit-box-sizing content-box
 	box-sizing content-box
+	outline-offset -2px
 
 // No inner padding and search cancel button in Safari and Chrome on OS X.
 input[type='search']::-webkit-search-cancel-button,
 input[type='search']::-webkit-search-decoration
 	-webkit-appearance none
 
-fieldset // Consistent border, margin, and padding.
-	border 1px solid #c0c0c0
-	margin 0 2px
-	padding 0.35em 0.625em 0.75em
+::-webkit-file-upload-button
+	-webkit-appearance button
+	font: inherit
 
-legend // Hack to correct `color` not being inherited in IE 8/9/10/11.
-	border 0
+summary
+	display list-item
+
+[hidden], // Address `[hidden]` styling not present in IE 8~10.
+template // Hide the `template` element in IE 8~11, Safari, and FF < 22.
+	display none
+
+audio:not([controls])
+	display none // Prevent displaying `audio` without controls.
+	height 0 // Remove excess height in iOS 5 devices.
+
+dfn // + style not present in Safari and Chrome.
+	font-style italic
+
+mark // + style not present in IE 8/9.
+	background #ff0
+	color #000
+
+svg:not(:root) // Overflow should be hidden in IE 9~11.
+	overflow hidden
+
+figure // Remove awkward margin on figure elements.
+	margin 0
+
+pre // Contain overflow and wrap words.
+	overflow auto
+
+table // Remove most spacing between table cells.
+	border-collapse collapse
+	border-spacing 0
+td, th
 	padding 0
 
-textarea // Remove default vertical scrollbar in IE 8~11.
-	overflow auto
+// Reset default cursor for disabled elements.
+button[disabled], html input[disabled]
+	cursor default
+
+input // Reset line-height again FF 4+ UA stylsheet.
+	line-height normal
 
 optgroup // Don't inherit the `font-weight` applied above.
 	font-weight bold
