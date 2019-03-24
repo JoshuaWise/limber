@@ -15,11 +15,11 @@ module.exports = function () {
 		style.define('-is-image', function(node) {
 			if (!node || arguments.length > 1) return nodes.false;
 			var string = unwrap(node).toString();
-			
+
 			if (urlRE.test(string)) return nodes.true;
 			if (gradientRE.test(string)) return nodes.true;
 			if (elementRE.test(string)) return nodes.true;
-			
+
 			return nodes.false;
 		});
 	};

@@ -5,7 +5,7 @@
 grid-size ?= 12
 
 assert(-is-positive-number(grid-size), 'must be a positive number')
- 
+
 -grid-build()
 	.row
 		display flex
@@ -66,7 +66,7 @@ assert(-is-positive-number(grid-size), 'must be a positive number')
 						-grid-insert-orders(media)
 			&.grow
 				flex-grow 1
-				
+
 -grid-insert-sizes(media)
 	for i in (1..grid-size)
 		&.{media}-{i}

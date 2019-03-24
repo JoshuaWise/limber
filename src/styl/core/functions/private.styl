@@ -19,13 +19,13 @@ use('./use/is-image.js')
 -global-value-in(list)
 	return true if global in list for global in -global-values
 	return false
-	
+
 /**
  * Gets the priority flag from mixin arguments.
  */
 -get-priority(args)
 	return last(last(args)) == !important ? !important : unquote('')
-	
+
 /**
  * Returns a Boolean, indicating whether the given value is a list of 2
  * ascending non-negative px values.
@@ -37,7 +37,7 @@ use('./use/is-image.js')
 	return false unless value[0] >= 0 and value[1] >= 0
 	return false unless value[0] < value[1]
 	return true
-	
+
 /**
  * Returns a Boolean, indicating whether the given value is a non-negative
  * unit value, or 0.
@@ -48,7 +48,7 @@ use('./use/is-image.js')
 	return false unless unit(value) or value == 0
 	return false unless value >= 0
 	return true
-	
+
 /**
  * Returns a Boolean, indicating whether the given value is a non-negative,
  * unitless number.
@@ -59,7 +59,7 @@ use('./use/is-image.js')
 	return false unless unit(value) == ''
 	return false unless value >= 0
 	return true
-	
+
 /**
  * Returns a Boolean, indicating whether the given value is a color.
  */
@@ -67,7 +67,7 @@ use('./use/is-image.js')
 	return false unless length(value) == 1
 	return false unless value is a 'color'
 	return true
-	
+
 /**
  * Returns a Boolean, indicating whether the given value is an image, or "none".
  */
@@ -75,7 +75,7 @@ use('./use/is-image.js')
 	return false unless length(value) == 1
 	return false unless -is-image(value) or value == 'none'
 	return true
-	
+
 /**
  * Returns a Boolean, indicating whether the given value is a valid time unit.
  */
@@ -84,7 +84,7 @@ use('./use/is-image.js')
 	return false unless value is a 'unit'
 	return false unless unit(value) == 's' or unit(value) == 'ms' or value == 0
 	return true
-	
+
 /**
  * Returns a Boolean, indicating whether the given value is a direction.
  */
@@ -92,7 +92,7 @@ use('./use/is-image.js')
 	return false unless length(value) == 1
 	return false unless value in -global-directions
 	return true
-	
+
 /**
  * Returns a Boolean, indicating whether the given value is a percentage between
  * 0% and 100%.
@@ -103,24 +103,24 @@ use('./use/is-image.js')
 	return false unless unit(value) == '%'
 	return false unless value >= 0% and value <= 100%
 	return true
-	
+
 -define-var(name, value)
 	meta.limber-var-{name}
 		font-family '' + value
-		
+
 /**
  * Parsed a list of groups, which each contain directions folllowed by a value.
  * Returns a hash of the resulting directions and their corresponding values.
  * If there is only one group, it must be prepended by null, to create a proper
  * list with length > 1. The last group should already have potential priority
  * flags removed.
- * 
- * By default, groups without both directions and values are ignored. 
+ *
+ * By default, groups without both directions and values are ignored.
  * To accept groups without values, pass a 'default-value' option of length > 0.
  * When no value is given, this will take its place. Keep in mind that if this
  * option is not provided, and a validator function does not accept values of
  * length == 0, the validator will throw an error.
- * 
+ *
  * An option 'direction-transformer' can be passed, which is a function
  * accepting a list of the given directions, and returning a list of strings.
  * Those strings are instead used as keys in the returned hash.
@@ -130,19 +130,19 @@ use('./use/is-image.js')
  * An option 'validator' can be passed, which is a function accepting the given
  * value in a group, and returning true if it's valid, and false otherwise.
  * When false is returned, an error is thrown and stylus parsing fails.
- * 
+ *
  * Examples can be be seen in border-radius.styl, and positions.styl.
  */
 -parse-groups(groups, options)
 	default-value-in-options = 'default-value' in options
 	default-value = options['default-value']
-	
+
 	validator-in-options = 'validator' in options
 	validator = options['validator']
-	
+
 	direction-transformer-in-options = 'direction-transformer' in options
 	direction-transformer = options['direction-transformer']
-	
+
 	result-directions = {}
 	for group in groups
 		unless group == null
@@ -167,7 +167,7 @@ use('./use/is-image.js')
 				for direction in given-directions
 					result-directions[direction] = given-value
 	return result-directions
-	
+
 /**
  * Given a rule hash, returns a list with two elements.
  * That list's first element is the rule's first property's name (eg, font-size)
@@ -185,7 +185,7 @@ use('./use/is-image.js')
 	return null if len == 0
 	return property value for property, value in properties if len == 1
 	return property value for property, value in entry for entry in properties
-	
+
 /**
  * Given a list of rule hashes where each rule only contains one property,
  * returns a new list of rule hashes, which is logically equivilent, but
@@ -207,7 +207,7 @@ use('./use/is-image.js')
 -combine-rules(rules)
 	len = length(rules)
 	return () unless len > 0
-	
+
 	rules = clone(rules)
 	selectors = {}
 	for i in (0 ... len)
@@ -233,7 +233,7 @@ use('./use/is-image.js')
 			properties: properties
 		})
 	return results
-	
+
 /**
  * Given a rule hash, or a list of rule hashes, print the rules in actual CSS.
  * Example:
@@ -248,10 +248,9 @@ use('./use/is-image.js')
 		-print-rule(rules[0]) if rules[0] is a 'object'
 	else
 		-print-rule(rule) for rule in rules
-		
+
 -print-rule(rule)
 	selector = rule.selector
 	properties = rule.properties
 	{selector}
 		{property} value for property, value in properties
-		

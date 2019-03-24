@@ -6,7 +6,7 @@
  *  	size 50px
  * 		size 30% 2em
  * 		min-size 33%
- * 
+ *
  * Inspired by nib, https://github.com/tj/nib
  */
 size(w, h = null)
@@ -14,16 +14,15 @@ size(w, h = null)
 	h = w if h == null
 	width w priority
 	height h priority
-	
+
 min-size(w, h = null)
 	priority = -get-priority(arguments)
 	h = w if h == null
 	min-width w priority
 	min-height h priority
-	
+
 max-size(w, h = null)
 	priority = -get-priority(arguments)
 	h = w if h == null
 	max-width w priority
 	max-height h priority
-	

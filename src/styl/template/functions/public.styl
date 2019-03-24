@@ -17,4 +17,3 @@ between(value-range, viewport-range = phone-range[0] desktop-range[1])
 	return (value-min + value-max) / 2 if view-max - view-min == 0
 	scaleYOverX = unit((view-max - view-min) / (value-max - value-min), '');
 	return s('calc(1rem / %s - %s)', scaleYOverX, view-min / scaleYOverX - value-min)
-	

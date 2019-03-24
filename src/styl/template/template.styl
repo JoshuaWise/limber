@@ -1,14 +1,14 @@
 *, *:before, *:after
 	box-sizing border-box
 	text-rendering geometricPrecision
-	
+
 ::selection
 	background selection-color
 	text-shadow none
 ::-moz-selection
 	background selection-color
 	text-shadow none
-	
+
 html
 	background-color darken(background-color, 6.67%)
 	overflow-y auto
@@ -18,7 +18,7 @@ html
 		font-size phone-range[0] !important
 	@media viewport-max
 		font-size desktop-range[1] !important
-		
+
 body
 	background-color background-color
 	position relative
@@ -26,7 +26,7 @@ body
 	min-height 100vh
 	overflow-x hidden
 	box-shadow 0 0 10px alpha(black, 0.1)
-	
+
 body, .base
 	color foreground-color
 	font-family base-font-family
@@ -40,26 +40,26 @@ body, .base
 	unless font-scale-base-desktop == font-scale-base-tablet
 		@media desktop
 			font-size base-font-size * font-scale-base-desktop
-			
+
 a
 	color primary-color
 	&:hover
 		cursor pointer
-		
+
 img
 	display inline-block
 	height auto
 	max-width 100%
-	
+
 audio, canvas, iframe, img, svg, video
 	vertical-align middle
-	
+
 textarea
 	resize vertical
-	
+
 p, ol, ul
 	margin paragraph-margin
-	
+
 p
 	color inherit
 	font-family inherit
@@ -67,5 +67,5 @@ p
 	font-weight inherit
 	font-style inherit
 	line-height inherit
-	
+
 -apply-heading-styles()

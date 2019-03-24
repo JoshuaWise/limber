@@ -42,11 +42,11 @@ assert(-is-time(loader-progress-transition-time), 'must be a valid time unit (s 
 			box-sizing content-box
 			padding-{blur-direction} blur-distance
 			background no-repeat linear-gradient(unquote('to ' + blur-direction), loader-progress-foreground-color, loader-progress-foreground-color s('calc(100% - %s)', blur-distance), transparent)
-			
+
 #limber-loader #limber-progress
 	-loader-progress-construct()
-	
+
 #limber-loader.loaded #limber-progress
 	transition all 0s
-	
+
 -define-var('loader-progress-unit', loader-progress-position in ('top' 'bottom') ? 'vw' : 'vh')

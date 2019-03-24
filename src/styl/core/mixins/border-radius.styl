@@ -16,12 +16,12 @@ border-radius()
 		-border-radius-print-properties(result-properties, priority)
 	else
 		border-radius arguments
-		
+
 -border-radius-alternative-syntax(args)
 	return true if list-separator(args) == ','
 	return true if arg in -global-directions for arg in args
 	return false
-	
+
 -border-radius-print-properties(properties, priority)
 	top-left = properties['top-left']
 	top-right = properties['top-right']
@@ -43,7 +43,7 @@ border-radius()
 			border-radius top-left[0] top-right[0] bottom-right[0] bottom-left[0] / top-left[1] top-right[1] bottom-right[1] bottom-left[1] priority
 		else
 			border-radius top-left top-right bottom-right bottom-left priority
-			
+
 -border-radius-validator(value)
 	return true if value in -global-values
 	len = length(value)
@@ -51,35 +51,35 @@ border-radius()
 	return false unless value[0] is a 'unit' or value[0] is a 'literal'
 	return false unless len == 1 or value[1] is a 'unit' or value[1] is a 'literal'
 	return true
-	
+
 -border-radius-transformer(given-directions)
 	// If there are no given directions, assume all directions.
 	return ('top-left' 'top-right' 'bottom-left' 'bottom-right') unless length(given-directions)
-	
+
 	v-directions = ('top' 'bottom')
 	h-directions = ('left' 'right')
 	interpreted-directions = ()
-	
+
 	direction = given-directions[0]
 	axis = direction in v-directions ? v-directions : h-directions
 	cross = axis == v-directions ? h-directions : v-directions
 	opposite = direction == axis[0] ? axis[1] : axis[0]
-	
+
 	includes-opposite = opposite in given-directions
-	
+
 	// If there are no cross directions specified, assume both of them.
 	unless cross[0] in given-directions or cross[1] in given-directions
 		push(given-directions, cross[0])
 		push(given-directions, cross[1])
-		
+
 	for cross-direction in cross
 		if cross-direction in given-directions
 			push(interpreted-directions, axis == v-directions ? direction + '-' + cross-direction : cross-direction + '-' + direction)
 			if includes-opposite
 				push(interpreted-directions, axis == v-directions ? opposite + '-' + cross-direction : cross-direction + '-' + opposite)
-				
+
 	return interpreted-directions
-	
+
 -border-radius-options = {
 	'validator': -border-radius-validator
 	'direction-transformer': -border-radius-transformer

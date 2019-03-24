@@ -17,7 +17,7 @@ slice(list, start = 0, end = null)
 	for i in (k ... final)
 		push(result, list[i])
 	return result
-	
+
 /**
  * Sorts a list IN PLACE (no copy is made), and returns the list.
  * The default sorting function compares numbers by value, and strings by
@@ -27,7 +27,7 @@ slice(list, start = 0, end = null)
  * 		sort(1 5 7 -15 845) => (-15 1 5 7 845)
  * 		sort('zebra' 'apple' 'blueberry') => ('apple' 'blueberry' 'zebra')
  * 		sort('90' '600' '77') => ('600' '77' '90')
- * 
+ *
  * If you specify a sorting function as a second argument, that function should
  * return true only if its first argument is equal to or less than the second
  * argument. Otherwise, it should return false.
@@ -35,12 +35,12 @@ slice(list, start = 0, end = null)
 sort(list, fn = null)
 	len = length(list)
 	return list unless len > 1
-	
+
 	if fn == null
 		fn = @(a, b) {
 			a <= b
 		}
-		
+
 	for i in (1 ... len)
 		value = list[i]
 		actual-j = i - 1
@@ -49,12 +49,12 @@ sort(list, fn = null)
 			unless broke-loop
 				actual-j = j
 				if j < 0 or fn(list[j], value)
-					broke-loop = true 
+					broke-loop = true
 				else
 					list[j + 1] = list[j]
 		list[actual-j + 1] = value
 	return list
-	
+
 /**
  * Returns a clone of the given source, but with the element at index `index`
  * replaced by `value`.
@@ -63,7 +63,7 @@ change(source, index, value)
 	expr = clone(source)
 	expr[index] = value
 	return expr
-	
+
 /**
  * If the given value is a px unit, or can be converted to px while maintaining
  * its value, convert it to px and return it. Otherwise, null is returned.
@@ -74,7 +74,7 @@ force-px(value)
 	return null unless value is a 'unit'
 	return null unless unit(value) == 'px' or value == 0
 	return (value)px
-	
+
 /**
  * If the given value is truthy, nothing happens. Otherwise, throw an error
  * message.
@@ -82,4 +82,3 @@ force-px(value)
 assert(test-value, error-message = 'assert failed')
 	error(error-message) unless test-value
 	return
-	

@@ -1,6 +1,6 @@
 /**
  * Provides shorthands for specifying position and left, right, top, bottom
- * in a single line. 
+ * in a single line.
  * If no value is specified, it defaults to 0.
  * If no directions are given, the value is applied to all 4 directions.
  * Usage:
@@ -9,21 +9,21 @@
  * 		absolute left right
  * 		relative left 5px, top 20px
  * 		static auto
- * 
+ *
  * Inspired by nib, https://github.com/tj/nib
  */
 static()
 	-positions('static', arguments)
-	
+
 relative()
 	-positions('relative', arguments)
-	
+
 absolute()
 	-positions('absolute', arguments)
-	
+
 fixed()
 	-positions('fixed', arguments)
-	
+
 -positions(positioning, args)
 	priority = -get-priority(args)
 	position unquote(positioning) priority
@@ -31,17 +31,17 @@ fixed()
 		groups = list-separator(args) == ',' ? args : (null args)
 		result-properties = -parse-groups(groups, -positions-options)
 		{property} value priority for property, value in result-properties
-		
+
 -positions-validator(value)
 	return true if value in -global-values or value == 'auto'
 	return false unless length(value) == 1
 	return false unless value is a 'unit' or value is a 'literal'
 	return true
-	
+
 -positions-transformer(given-directions)
 	return ('top' 'bottom' 'left' 'right') unless length(given-directions)
 	return given-directions
-	
+
 -positions-options = {
 	'default-value': 0
 	'validator': -positions-validator

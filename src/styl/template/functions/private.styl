@@ -28,10 +28,10 @@
 			})
 			i = i + 1
 	-print-rules(-combine-rules(rules))
-	
+
 	font-size-rules = ()
 	push(font-size-rules, rule) if -first-property(rule)[0] == 'font-size' for rule in rules
-	
+
 	tablet-test = @(value) {return value != 1}
 	desktop-test = @(value, i) {
 		prev = backtrack-until-non-null(font-scale-heading-tablet, i)
@@ -39,7 +39,7 @@
 	}
 	tablet-options = {query: booklet, values: font-scale-heading-tablet, test: tablet-test}
 	desktop-options = {query: desktop, values: font-scale-heading-desktop, test: desktop-test}
-	
+
 	for media in (tablet-options desktop-options)
 		query = media.query
 		values = media.values
@@ -57,7 +57,7 @@
 		unless scaled-rules[0] == null
 			@media query
 				-print-rules(-combine-rules(scaled-rules))
-				
+
 -is-list-of-positive-numbers(values)
 	if list-separator(values) == ','
 		return false unless -is-positive-number(value) or value == null for value in values
@@ -65,4 +65,3 @@
 		return true
 	else
 		return -is-positive-number(values)
-		

@@ -8,11 +8,11 @@
 background-2x()
 	background arguments
 	-background-2x-helper(arguments)
-	
+
 background-image-2x()
 	background-image arguments
 	-background-2x-helper(arguments)
-	
+
 -background-2x-helper(args)
 	if list-separator(args) == ','
 		urls = ()
@@ -23,14 +23,13 @@ background-image-2x()
 		query = -background-2x-query()
 		@media query
 			background-image -convert-to-list(urls) -get-priority(args)
-			
+
 -background-2x-query-fallback = unquote('(-webkit-min-device-pixel-ratio: 2), (min--moz-device-pixel-ratio: 2), (-o-min-device-pixel-ratio: 2/1), (min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx), print')
 -background-2x-query()
 	return (retina is defined and retina is a 'string') ? retina : -background-2x-query-fallback
-	
+
 -background-2x-last-image-node(args)
 	len = length(args)
 	return unquote('none') unless len
 	return args[i] if -is-bg-image(args[i]) for i in (len - 1..0)
 	return unquote('none')
-	

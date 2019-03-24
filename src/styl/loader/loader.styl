@@ -1,19 +1,19 @@
 /**
  * Apply this id to a <div> tag at the top of your <body> element.
  * It will display a loading screen with an animated gif.
- * You can change the displayed graphic by assigning a url() to 
+ * You can change the displayed graphic by assigning a url() to
  * `loader-graphic`.
- * 
+ *
  * You can also insert your graphic manually in the HTML, or by adding an
  * "icon-" class to the #limber-loader element. If you choose one of these
  * methods, you can set `loader-graphic` to "none".
- * 
+ *
  * By default, adding the class "animate" to #limber-loader will cause it to
  * spin indefinitely, mimicing the behavior of typical loading spinners.
  * If you specify your own loading graphic, and it's not an animated gif, you
  * can use this class to animate it. You can also override the default animation
  * by specifying `loader-animation`.
- * 
+ *
  * You can also add the "animate" class to any child element of #limber-loader,
  * in order to only animate that element.
  */
@@ -43,7 +43,7 @@ assert(-is-time(loader-fade-time), 'must be a valid time unit (s or ms)')
 		visibility hidden
 		opacity 0
 		pointer-events none
-		
+
 	&:before, &:after, > *:not(#limber-progress)
 		absolute 0
 		animation -loader-fade-animation
@@ -57,19 +57,19 @@ assert(-is-time(loader-fade-time), 'must be a valid time unit (s or ms)')
 			content ''
 			background no-repeat 50% 50% loader-graphic
 			z-index -1
-			
+
 	&.animate
 		&:before, &:after, > *:not(#limber-progress)
 			animation -loader-fade-animation, loader-animation
 	.animate
 		animation loader-animation
-		
+
 if 'loader-default-animation' in loader-animation
 	@keyframes loader-default-animation {
 	    0% {transform: rotateZ(0deg);}
 	    100% {transform: rotateZ(360deg);}
 	}
-	
+
 @keyframes loader-fade-in {
 	0% {opacity: 0;}
 	100% {opacity: 1;}
